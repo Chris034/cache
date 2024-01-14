@@ -2,7 +2,7 @@ import styled from "styled-components"
 import { device } from "../designSystem/screenSizeConfig"
 import { useNavigate } from "react-router-dom"
 
-export const TitleContainer = styled.div<{translateX: number, translateY: number}>`
+export const TitleContainer = styled.div<{translateX?: number, translateY?: number}>`
     padding: 10px;
     position: absolute;
     
@@ -12,9 +12,9 @@ export const TitleContainer = styled.div<{translateX: number, translateY: number
     }
 
     @media ${device.desktop} {
-        left: 50%;
-        top: 50%;
-        transform: translate(${props => props.translateX ? props.translateX : -50 }%, ${props => props.translateY ? props.translateY : -50}%);
+        left: 12%;
+        top: 20%;
+        transform: translate(${props => props.translateX ? props.translateX : 0 }%, ${props => props.translateY ? props.translateY : 0}%);
         width: 75%;
     }
 `
@@ -46,7 +46,7 @@ const Tagline = styled.div`
     }
 `
 
-const Description = styled.div`
+export const Description = styled.div`
     color: #FFFFFF;
     font-family: IBM Plex Mono;
     font-size: 18px;
@@ -55,7 +55,7 @@ const Description = styled.div`
     letter-spacing: -0.05em;
     text-align: left;
 `
-const ButtonGroup = styled.div`
+export const ButtonGroup = styled.div`
     position: absolute;
     display: flex;
     flex-direction: row;   
@@ -68,7 +68,7 @@ const ButtonGroup = styled.div`
 
 `
 
-const ActionButton = styled.button`
+export const ActionButton = styled.button`
     box-shadow: -3px 5px #FFFFFF;
     transition: all ease-in .05s;
 
@@ -104,7 +104,7 @@ const Home = (): React.JSX.Element => {
     }
 
     return (
-        <TitleContainer translateX={-50} translateY={-75}>
+        <TitleContainer>
             <Title>cache</Title>
             <Tagline>fast and simple file sharing</Tagline>
             <Description>Create private chat rooms in a snap. Share texts, links, images, and files securely. </Description>
