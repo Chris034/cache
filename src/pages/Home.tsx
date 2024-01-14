@@ -1,16 +1,11 @@
 import styled from "styled-components"
 import { device } from "../designSystem/screenSizeConfig"
+import { useNavigate } from "react-router-dom"
 
-
-const HomeContainer = styled.div`
-    position: relative;
-    height: 100vh;
-`
-
-const TitleContainer = styled.div`
+export const TitleContainer = styled.div<{translateX: number, translateY: number}>`
     padding: 10px;
     position: absolute;
-
+    
     @media ${device.mobile} {
         left: 0;
         top: 0;   
@@ -19,13 +14,13 @@ const TitleContainer = styled.div`
     @media ${device.desktop} {
         left: 50%;
         top: 50%;
-        transform: translate(-50%, -75%);
+        transform: translate(${props => props.translateX ? props.translateX : -50 }%, ${props => props.translateY ? props.translateY : -50}%);
         width: 75%;
     }
 `
 
 
-const Title = styled.div`
+export const Title = styled.div`
     color: #FFFFFF;     
     font-family: IBM Plex Mono;
     font-size: 144px;
@@ -101,20 +96,25 @@ const ActionButton = styled.button`
 
 
 const Home = (): React.JSX.Element => {
+
+    const navigate = useNavigate();
+
+    function handleJoinRoomClick() {
+      navigate("/join-room");
+    }
+
     return (
-        <HomeContainer>
-            <TitleContainer>
-                <Title>cache</Title>
-                <Tagline>fast and simple file sharing</Tagline>
-                <Description>Create private chat rooms in a snap. Share texts, links, images, and files securely. </Description>
-                <Description>Everything vanishes once the chat ends, ensuring total privacy.</Description>
-                <Description>Connect, share, and communicate with peace of mind.</Description>
-                <ButtonGroup>
-                    <ActionButton>make a room</ActionButton>
-                    <ActionButton>join a room</ActionButton>
-                </ButtonGroup>
-            </TitleContainer>
-        </HomeContainer>
+        <TitleContainer translateX={-50} translateY={-75}>
+            <Title>cache</Title>
+            <Tagline>fast and simple file sharing</Tagline>
+            <Description>Create private chat rooms in a snap. Share texts, links, images, and files securely. </Description>
+            <Description>Everything vanishes once the chat ends, ensuring total privacy.</Description>
+            <Description>Connect, share, and communicate with peace of mind.</Description>
+            <ButtonGroup>
+                <ActionButton>make a room</ActionButton>
+                <ActionButton onClick={handleJoinRoomClick}>join a room</ActionButton>
+            </ButtonGroup>
+        </TitleContainer>
     )
 }
 
