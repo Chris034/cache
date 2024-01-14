@@ -4,7 +4,6 @@ import { device } from "../designSystem/screenSizeConfig"
 
 const HomeContainer = styled.div`
     position: relative;
-    border: 1px solid green;
     height: 100vh;
 `
 
@@ -20,8 +19,8 @@ const TitleContainer = styled.div`
     @media ${device.desktop} {
         left: 50%;
         top: 50%;
-        transform: translate(-50%, -65%);
-        width: 80%;
+        transform: translate(-50%, -75%);
+        width: 75%;
     }
 `
 
@@ -61,7 +60,44 @@ const Description = styled.div`
     letter-spacing: -0.05em;
     text-align: left;
 `
+const ButtonGroup = styled.div`
+    position: absolute;
+    display: flex;
+    flex-direction: row;   
+    justify-content: center;
+    align-items: center;
+    margin-top: 75px;
+    left: 0;
+    width: 100%;
+    gap: 210px;
 
+`
+
+const ActionButton = styled.button`
+    box-shadow: -3px 5px #FFFFFF;
+    transition: all ease-in .05s;
+
+    font-family: IBM Plex Mono;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 23px;
+    letter-spacing: -0.05em;
+    text-align: left;
+
+    background-color: #232323;
+    border: 2px solid white;
+    color: #FFFFFF;
+    padding: 12px 25px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+
+    &:hover {
+        box-shadow: none;
+        transform: translateY(4px) !important;
+        transition: all ease-in .05s;
+    }
+`
 
 
 const Home = (): React.JSX.Element => {
@@ -73,9 +109,10 @@ const Home = (): React.JSX.Element => {
                 <Description>Create private chat rooms in a snap. Share texts, links, images, and files securely. </Description>
                 <Description>Everything vanishes once the chat ends, ensuring total privacy.</Description>
                 <Description>Connect, share, and communicate with peace of mind.</Description>
-                <button>Make A Room</button>
-                <button>Join A Room</button>
-
+                <ButtonGroup>
+                    <ActionButton>make a room</ActionButton>
+                    <ActionButton>join a room</ActionButton>
+                </ButtonGroup>
             </TitleContainer>
         </HomeContainer>
     )
