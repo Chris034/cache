@@ -47,7 +47,7 @@ const CodeInput: React.FC = () => {
     const input3 = useRef<HTMLInputElement>(null);
     const input4 = useRef<HTMLInputElement>(null);
 
-    // Handles input event to limit to one character and focus next input
+    // handles input event to limit to one character and focus next input
     const handleOnNumberInput = (nextInput: React.RefObject<HTMLInputElement>) => (e: React.FormEvent<HTMLInputElement>) => {
         const inputElement = e.target as HTMLInputElement;
         const value = inputElement.value;
@@ -61,7 +61,7 @@ const CodeInput: React.FC = () => {
         }
     };
 
-    // handles arrow key navigation
+    // handles arrow key/backspace navigation
     const handleKeyDown = (prevInput?: React.RefObject<HTMLInputElement>, nextInput?: React.RefObject<HTMLInputElement>) => (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'ArrowRight' && nextInput?.current) {
             nextInput.current.focus();
@@ -79,7 +79,7 @@ const CodeInput: React.FC = () => {
     const handleOnPaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
         e.preventDefault();
 
-        const pastedData = e.clipboardData.getData('text').slice(0, 4); // Limiting to 4 characters
+        const pastedData = e.clipboardData.getData('text').slice(0, 4);
 
         const inputs = [input1, input2, input3, input4];
 
@@ -87,14 +87,9 @@ const CodeInput: React.FC = () => {
             const inputRef = inputs[index];
             if (inputRef && inputRef.current) {
                 inputRef.current.value = char;
+                inputRef.current.focus();
             }
         });
-
-        const nextInputIndex = pastedData.length;
-        const nextInput = inputs[nextInputIndex] ? inputs[nextInputIndex].current : null;
-        if (nextInput) {
-            nextInput.focus();
-        }
     };
 
     return (
