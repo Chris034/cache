@@ -96,11 +96,11 @@ type CodeInputProps = {
   
       setValues(newValues);
     };
-  
+    console.log(inputRefs)
     return (
       <InputForm>
         {Array.from({ length: numInputs }, (_, index) => (
-          <NumberInput key={index} type="number" value={values[index]} min="0" max="9" placeholder=" " onChange={handleOnNumberInput(index)} onKeyDown={handleKeyDown(index)} onPaste={handleOnPaste} ref={(e) => (inputRefs.current[index] = e)} autoFocus={index === 0} />
+          <NumberInput key={index} type="number" value={values[index]} min="0" max="9" placeholder=" " onChange={handleOnNumberInput(index)} onKeyDown={handleKeyDown(index)} onPaste={handleOnPaste} ref={((e) => inputRefs.current[index] = e!)} autoFocus={index === 0} />
       ))}
     </InputForm>
   );
