@@ -1,6 +1,7 @@
 import styled from "styled-components"
 import { ActionButton, ButtonGroup, Description, Title, TitleContainer } from "./Home"
 import CodeInput from "../components/CodeInput"
+import { useState } from "react"
 
 const JoinRoomDescription = styled(Description)`
     margin-top: 60px;
@@ -28,13 +29,22 @@ const NumberBox = styled.input`
 `
 
 const JoinRoom = (): React.JSX.Element => {
+
+    const [roomCode, setRoomCode] = useState<number | null>(null);
+    const [submitted, setSubmitted] = useState<boolean>(false);
+
+    const handleJoinClick = () => {
+        setSubmitted(prev=> !prev)
+        console.log(roomCode)
+    }
+
     return (
         <TitleContainer>
             <Title>join a room</Title>
             <JoinRoomDescription>Enter the 4-digit code below to join the room.</JoinRoomDescription>
-            <CodeInput/>
+            <CodeInput setCode={setRoomCode} submitted={submitted} />
             <ButtonGroup>
-                <ActionButton>join</ActionButton>
+                <ActionButton onClick={handleJoinClick}>join</ActionButton>
             </ButtonGroup>
         </TitleContainer>
     )
