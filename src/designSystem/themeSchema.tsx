@@ -2,8 +2,8 @@
 // ignore for now
 
 export interface ThemeSchema {
-    textColor?: string
-    myFontSize?: string
-    myBorderColor?: string
-    myBorderRadius?: string
-  }
+	textColor?: string;
+	myFontSize?: string;
+	myBorderColor?: string;
+	myBorderRadius?: string;
+}

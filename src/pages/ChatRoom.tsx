@@ -1,7 +1,5 @@
 const ChatRoom = (): React.JSX.Element => {
-    return (
-        <>ChatRoom</>
-    )
-}
+    return <>ChatRoom</>;
+};
 
-export default ChatRoom
+export default ChatRoom;
