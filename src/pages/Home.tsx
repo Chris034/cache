@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { device } from '../designSystem/screenSizeConfig';
 import { Page, useSwitchPage } from '../hooks';
+import { generateRoomCode } from '../commonLogic/generateRoomCode';
 
 export const TitleContainer = styled.div<{
     translateX?: number;
@@ -37,7 +38,7 @@ export const Title = styled.div`
     margin-bottom: -25px;
 `;
 
-const Tagline = styled.div`
+export const Tagline = styled.div`
     color: #ffffff;
     font-family: IBM Plex Mono;
     font-size: 72px;
@@ -59,16 +60,22 @@ export const Description = styled.div`
     letter-spacing: -0.05em;
     text-align: left;
 `;
-export const ButtonGroup = styled.div`
-    position: absolute;
+
+export const ButtonGroup = styled.div<{
+    gap?: string;
+    marginTop?: string;
+    position?: string;
+    justifyContent?: string;
+}>`
+    position: ${(props) => props.position || 'absolute'};
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: ${(props) => props.justifyContent || 'center'};
     align-items: center;
-    margin-top: 75px;
+    margin-top: ${(props) => props.marginTop || 0};
     left: 0;
     width: 100%;
-    gap: 210px;
+    gap: ${(props) => props.gap || 0};
 `;
 
 export const ActionButton = styled.button`
@@ -98,10 +105,14 @@ export const ActionButton = styled.button`
 `;
 
 const Home = (): React.JSX.Element => {
-    const navigateTo = useSwitchPage();
+    const { navigateTo } = useSwitchPage();
 
     function handleJoinRoomClick() {
         navigateTo(Page.JoinRoomPage);
+    }
+
+    function handleCreateRoomClick() {
+        navigateTo(Page.ChatRoomPage, generateRoomCode());
     }
 
     return (
@@ -118,8 +129,10 @@ const Home = (): React.JSX.Element => {
             <Description>
                 Connect, share, and communicate with peace of mind.
             </Description>
-            <ButtonGroup>
-                <ActionButton>make a room</ActionButton>
+            <ButtonGroup marginTop="75px" gap="210px">
+                <ActionButton onClick={handleCreateRoomClick}>
+                    make a room
+                </ActionButton>
                 <ActionButton onClick={handleJoinRoomClick}>
                     join a room
                 </ActionButton>

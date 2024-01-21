@@ -15,7 +15,10 @@ root.render(
                 <Route path="/" element={<Layout />}>
                     <Route index element={<Home />} />
                     <Route path="join-room" element={<JoinRoom />} />
-                    <Route path="chatroom" element={<ChatRoom />} />
+                    <Route
+                        path="chat-room/:chatRoomId"
+                        element={<ChatRoom />}
+                    />
                     <Route path="*" element={<DeadEnd />} />
                 </Route>
             </Routes>
