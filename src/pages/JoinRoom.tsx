@@ -16,7 +16,7 @@ const JoinRoomDescription = styled(Description)`
 `;
 
 const JoinRoom = (): React.JSX.Element => {
-    const navigateTo = useSwitchPage();
+    const { navigateTo } = useSwitchPage();
 
     const [roomCode, setRoomCode] = useState<string>('');
 
@@ -33,7 +33,7 @@ const JoinRoom = (): React.JSX.Element => {
                 Enter the 4-digit code below to join the room.
             </JoinRoomDescription>
             <CodeInput onCodeChange={setRoomCode} />
-            <ButtonGroup>
+            <ButtonGroup marginTop="75px" gap="210px">
                 <ActionButton onClick={handleJoinClick}>join</ActionButton>
             </ButtonGroup>
         </TitleContainer>
