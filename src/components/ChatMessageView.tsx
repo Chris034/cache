@@ -1,21 +1,18 @@
 import styled from 'styled-components';
 import ChatMessage, { Message } from './ChatMessage';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
-export const MessageView = styled.div`
+const MessageViewWrapper = styled.div`
     background: #363636;
     border-radius: 30px;
-    // border: 1px solid red;
     height: 100%;
     box-sizing: border-box;
     padding: 10px 10px 10px 10px;
 `;
 
-export const MessageView2 = styled.div`
+const MessageView = styled.div`
     background: #363636;
-    // border: 1px solid red;
     height: 100%;
-    //figure this out!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     max-height: 70vh;
     box-sizing: border-box;
     overflow-y: auto;
@@ -40,14 +37,19 @@ export const MessageView2 = styled.div`
     }
 `;
 
-export const MessageContainer = styled.div`
+const MessageContainer = styled.div`
     width: 100%;
-    min-height: 100px;
 `;
 
-export const MessageContent = styled.div``;
-
 const ChatMessageView = () => {
+    const refView = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        if (refView?.current) {
+            refView.current.scrollTop = refView.current.scrollHeight;
+        }
+    }, []);
+
     const [messages, setMessages] = useState<Message[]>([
         {
             name: 'Braveheart38',
@@ -106,19 +108,19 @@ const ChatMessageView = () => {
     ]);
 
     return (
-        <MessageView>
-            <MessageView2>
+        <MessageViewWrapper>
+            <MessageView ref={refView}>
                 <MessageContainer>
                     {messages.map((message: Message, index) => {
                         return (
-                            <div id={index.toString()}>
+                            <div key={index.toString()}>
                                 <ChatMessage message={message} />
                             </div>
                         );
                     })}
                 </MessageContainer>
-            </MessageView2>
-        </MessageView>
+            </MessageView>
+        </MessageViewWrapper>
     );
 };
 

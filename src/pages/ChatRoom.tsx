@@ -1,28 +1,25 @@
 import styled from 'styled-components';
 import { Page, useSwitchPage } from '../hooks';
-import { ActionButton, ButtonGroup } from './Home';
-import { ChatInput } from '../components';
+import { ActionButton, ButtonGroup, ChatInput } from '../components';
 import ChatMessageView from '../components/ChatMessageView';
 import { generateRoomCode } from '../commonLogic/generateRoomCode';
 
-export const Wrapper = styled.div`
+const Wrapper = styled.div`
     padding: 20px 40px 40px 40px;
-    // border: 1px solid green;
     height: 100vh;
     box-sizing: border-box;
     display: flex;
     flex-flow: column;
 `;
 
-export const Header = styled.div`
+const Header = styled.div`
     color: #ffffff;
     display: flex;
     justify-content: space-between;
     padding: 0px 10px 0px 10px;
-    // border: 1px solid red;
 `;
 
-export const ChatRoomTitle = styled.div`
+const ChatRoomTitle = styled.div`
     font-family: IBM Plex Mono;
     font-size: 72px;
     font-weight: 700;
@@ -32,22 +29,22 @@ export const ChatRoomTitle = styled.div`
     padding-left: 10px;
 `;
 
-export const ChatBoxContainer = styled.div`
+const ChatBoxContainer = styled.div`
     display: flex;
     flex-flow: column;
-    // border: 1px solid purple;
     height: 100%;
-    max-height; inherit;
+    max-height: 83vh;
 `;
 
-export const ChatBoxViewContainer = styled.div`
-    // border: 1px solid yellow;
+const ChatBoxViewContainer = styled.div`
     padding: 10px 10px 10px 10px;
-    flex: 1 1 auto;
+    flex: 1;
+    overflow-y: auto;
 `;
 
-export const ChatBoxInputContainer = styled.div`
-    flex: 0 1 80px;
+const ChatBoxInputContainer = styled.div`
+    position: relative;
+    min-height: 40px;
 `;
 
 const ChatRoom = (): React.JSX.Element => {

@@ -1,14 +1,14 @@
 import styled from 'styled-components';
-import {
-    ActionButton,
-    ButtonGroup,
-    Description,
-    Title,
-    TitleContainer
-} from './Home';
 import CodeInput from '../components/CodeInput';
 import { useState } from 'react';
 import { Page, useSwitchPage } from '../hooks';
+import {
+    Description,
+    TitleContainer,
+    Title,
+    ButtonGroup,
+    ActionButton
+} from '../components';
 
 const JoinRoomDescription = styled(Description)`
     margin-top: 60px;
