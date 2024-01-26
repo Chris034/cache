@@ -1,43 +1,43 @@
 import { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 
-const InputBar = styled.div`
-    // width: 100%;
-    // box-sizing: border-box;
-    // background: none;
-    // box-shadow: -2px 3px #ffffff;
-    // border: 2px solid white;
-    // &:hover {
-    //     box-shadow: none;
-    //     transform: translateY(4px) !important;
-    //     transition: all ease-in 0.05s;
-    // }
-    // &:focus-within {
-    //     box-shadow: none;
-    //     transform: translateY(4px) !important;
-    //     transition: all ease-in 0.05s;
-    // }
-
-    // margin: 20px;
-
-    // height: 100px;
-`;
-
 const InputBox = styled.textarea`
-    width: 100%;
+    justify-content: center;
+    width: 97%;
+    font-family: IBM Plex Sans;
+    font-size: 16px;
     box-sizing: border-box;
-    background: none;
+    background-color: #1a1a1a;
+    height: 50px;
     color: #ffffff;
     border: none;
     display: block;
     resize: none;
     outline: none;
-    min-height: 40px;
-    overflow-y: 'auto';
-    border: 1px solid red;
-    border: 2px solid white;
-    position: absolute;
-    bottom: 0;
+    overflow-y: auto;
+    border-radius: 20px;
+    padding: 15px;
+    margin: auto;
+
+    &::-webkit-scrollbar {
+        width: 3px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background-color: #transparent;
+        border-radius: 10px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: #343434;
+        border-radius: 10px;
+        background-clip: content-box;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+        background-color: #666666;
+        
+    }
 `;
 
 const ChatInput = () => {
@@ -47,7 +47,7 @@ const ChatInput = () => {
         let element: HTMLTextAreaElement | null = ref?.current;
         if (
             element &&
-            element.scrollHeight >= 30 &&
+            element.scrollHeight >= 50 &&
             element.scrollHeight <= 350 &&
             element.parentElement
         ) {
@@ -69,9 +69,7 @@ const ChatInput = () => {
     }, []);
 
     return (
-        // <InputBar>
-        <InputBox ref={inputBoxRef}></InputBox>
-        // </InputBar>
+        <InputBox placeholder="Enter message..." ref={inputBoxRef}></InputBox>
     );
 };
 

@@ -5,7 +5,7 @@ import ChatMessageView from '../components/ChatMessageView';
 import { generateRoomCode } from '../commonLogic/generateRoomCode';
 
 const Wrapper = styled.div`
-    padding: 20px 40px 40px 40px;
+    padding: 40px 10px 40px 10px;
     height: 100vh;
     box-sizing: border-box;
     display: flex;
@@ -13,10 +13,12 @@ const Wrapper = styled.div`
 `;
 
 const Header = styled.div`
+    box-sizing: border-box;
     color: #ffffff;
+    background-color: inherit;
     display: flex;
     justify-content: space-between;
-    padding: 0px 10px 0px 10px;
+    padding: 0px 20px 0px 20px;
 `;
 
 const ChatRoomTitle = styled.div`
@@ -32,19 +34,25 @@ const ChatRoomTitle = styled.div`
 const ChatBoxContainer = styled.div`
     display: flex;
     flex-flow: column;
-    height: 100%;
+    flex-grow: 1;
+    box-sizing: border-box;
     max-height: 83vh;
 `;
 
 const ChatBoxViewContainer = styled.div`
+    box-sizing: border-box;
     padding: 10px 10px 10px 10px;
-    flex: 1;
     overflow-y: auto;
+    flex: 1;
 `;
 
 const ChatBoxInputContainer = styled.div`
-    position: relative;
-    min-height: 40px;
+    box-sizing: border-box;
+    width: 100%;
+    height: 50px;
+    padding-top: 15px;
+    flex-shrink: 0;
+    
 `;
 
 const ChatRoom = (): React.JSX.Element => {

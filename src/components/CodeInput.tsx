@@ -14,7 +14,7 @@ const NumberInput = styled.input`
         -webkit-appearance: none;
     }
     -moz-appearance: textfield;
-    font-family: IBM Plex Mono;
+    font-family: Inter
     font-size: 18px;
     font-weight: 400;
     line-height: 23px;
