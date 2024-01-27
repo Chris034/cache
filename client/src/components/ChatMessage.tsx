@@ -1,32 +1,37 @@
 import styled from 'styled-components';
 
 const Message = styled.div`
-    max-width: 100%;
-    min-height: 100px;
-    background: #363636;
+    padding: 25px;
+    width: 95%;
+    background: #inherit;
     color: white;
-    margin-left: 10px;
-    margin-right: 10px;
-    margin-top: 25px;
     display: flex;
     flex-direction: column;
+    border-bottom: 1px solid #484848;
+    transition: all ease-in 0.1s;
+    &:hover{
+        background-color: #1a1a1a
+    }
 `;
 
 const MessageHeader = styled.div`
     display: flex;
     flex-direction: row;
     gap: 10px;
+    
     align-items: center;
 `;
 
 const MessageOwnerName = styled.div`
     font-family: IBM Plex Sans;
     font-size: 18px;
+    color: pink;
     font-weight: 900;
 `;
 const MessageCreatedOn = styled.div`
     font-family: IBM Plex Sans;
     font-size: 10px;
+    color: grey;
 `;
 
 const MessageContent = styled.div`
