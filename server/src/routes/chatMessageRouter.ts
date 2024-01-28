@@ -1,5 +1,5 @@
 import express from 'express';
-import chatMessage from '../controllers/chatMessageRouter';
+import chatMessage from '../controllers/chatMessageController';
 
 const chatMessageRouter = express.Router()
 

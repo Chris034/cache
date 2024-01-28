@@ -9,6 +9,8 @@ dotenv.config({ path: `${__dirname}/../config.env` })
 const app = express();
 const port = process.env.PORT || 3000;
 
+app.use(express.json())
+
 app.use('/api/chat-message', chatMessageRouter)
 
 if(process.env.NODE_ENV.trim() == 'swagger') {
