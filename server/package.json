@@ -7,7 +7,7 @@
     "start": "tsc && node dist/index.js",
     "lint": "eslint . --ext .ts",
     "dev": "nodemon src/index.ts",
-    "swagger": "start http://localhost:3000/docs && set NODE_ENV=swagger && nodemon src/index.ts"
+    "swagger": "start http://localhost:3000/docs && set NODE_ENV=swagger && set PORT=3000 && nodemon src/index.ts"
   },
   "keywords": [],
   "author": "",
@@ -26,6 +26,7 @@
   "dependencies": {
     "dotenv": "^16.4.1",
     "express": "^4.17.1",
+    "express-validator": "^7.0.1",
     "mongodb": "^6.3.0"
   }
 }
