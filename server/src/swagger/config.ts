@@ -8,6 +8,10 @@ const options = {
         title: 'Cache API',
         version: '1.0.0',
       },
+      externalDocs: {                
+        description: "docs.json", 
+        url: "/docs.json"         
+      }, 
     },
     apis: ['./src/routes/*.ts'],
   }

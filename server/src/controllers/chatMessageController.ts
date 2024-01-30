@@ -1,4 +1,4 @@
-import { body, param, query, validationResult } from "express-validator";
+import { body, param, validationResult } from "express-validator";
 import ChatMessage from "../schema/chatMessageSchema";
 
 const getMessagesByRoomValidator = [

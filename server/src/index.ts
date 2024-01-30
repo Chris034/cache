@@ -13,9 +13,8 @@ app.use(express.json())
 
 app.use('/api/chat-message', chatMessageRouter)
 
-if(process.env.NODE_ENV.trim() == 'swagger') {
-    swaggerDocs(app, port)
-}
+swaggerDocs(app, port)
+
 
 connectToDatabase()
 .then(() => {    
