@@ -37,6 +37,7 @@ const ChatBoxContainer = styled.div`
     flex-grow: 1;
     box-sizing: border-box;
     max-height: 83vh;
+    overflow: hidden
 `;
 
 const ChatBoxViewContainer = styled.div`
@@ -49,10 +50,9 @@ const ChatBoxViewContainer = styled.div`
 const ChatBoxInputContainer = styled.div`
     box-sizing: border-box;
     width: 100%;
-    height: 50px;
-    padding-top: 15px;
+    min-height: 50px;
+    margin-top: 15px;
     flex-shrink: 0;
-    
 `;
 
 const ChatRoom = (): React.JSX.Element => {
