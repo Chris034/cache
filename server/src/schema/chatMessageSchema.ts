@@ -20,7 +20,6 @@ const chatMessageSchema = new Schema({
   roomNumber: {
     type: String,
     required: true,
-
   },
 });
 
@@ -34,4 +33,5 @@ chatMessageSchema.statics = {
 }
 
 const ChatMessage = model('Chat-Message', chatMessageSchema);
+
 export default ChatMessage;

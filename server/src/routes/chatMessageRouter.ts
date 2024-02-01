@@ -11,6 +11,7 @@ const chatMessageRouter = express.Router()
      *     tags:
      *     - Chat Message Controller
      *     summary: Get all messages in a room
+     *     operationId: ChatMessageGetAllByRoomNumber
      *     parameters:
      *      - name: roomNumber
      *        in: path
@@ -20,7 +21,13 @@ const chatMessageRouter = express.Router()
      *          type: string
      *     responses:
      *      200:
-     *        description: Fetched Successfully
+     *        description: Successful response
+     *        content:
+     *          application/json:
+     *            schema:
+     *              type: array
+     *              items:
+     *                $ref: '#/components/schemas/chatMessageDto'
      *      400:
      *        description: Bad Request
      *      404:
@@ -38,6 +45,7 @@ const chatMessageRouter = express.Router()
      *     tags:
      *     - Chat Message Controller
      *     summary: Create a chat message and associate it to a room
+     *     operationId: ChatMessageCreate
      *     requestBody:
      *      required: true
      *      content:
@@ -76,6 +84,7 @@ chatMessageRouter.post('/', chatMessage.createMessageValidator, chatMessage.crea
      *     tags:
      *     -  Chat Message Controller
      *     summary: Delete chat-message by Id
+     *     operationId: ChatMessageDeleteById
      *     parameters:
      *      - name: messageId
      *        in: path

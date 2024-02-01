@@ -11,6 +11,7 @@ async function getMessagesByRoom(req, res)
     if (result.isEmpty()) {
         const roomNumber = req.params.roomNumber
         const roomMessages = await ChatMessage.find({ roomNumber: roomNumber })
+        res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3001')
         return res.status(200).json( roomMessages );
     }
 

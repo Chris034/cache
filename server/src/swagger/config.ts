@@ -1,6 +1,6 @@
 import swaggerJsdoc from 'swagger-jsdoc'
 import swaggerUi from 'swagger-ui-express'
-
+import swaggerSchema from '../schema';
 const options = {
     definition: {
       openapi: '3.0.0',
@@ -11,7 +11,10 @@ const options = {
       externalDocs: {                
         description: "docs.json", 
         url: "/docs.json"         
-      }, 
+      },
+      components: {
+        schemas: swaggerSchema,
+      },
     },
     apis: ['./src/routes/*.ts'],
   }

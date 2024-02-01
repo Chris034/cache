@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { ChatMessageDto } from '../api/API';
 
 const Message = styled.div`
     padding: 25px;
@@ -39,18 +40,13 @@ const MessageContent = styled.div`
     font-size: 16px;
 `;
 
-export interface Message {
-    name: string;
-    messageContent: string;
-    createdOn: Date;
-}
-
 interface ChatMessageProps {
-    message: Message;
+    message: ChatMessageDto;
 }
 
 const ChatMessage = (props: ChatMessageProps) => {
-    const { name, messageContent, createdOn } = props.message;
+    const { author: name, content: messageContent, createdOn } = props.message;
+
     return (
         <Message>
             <MessageHeader>

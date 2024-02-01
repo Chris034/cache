@@ -3,6 +3,9 @@ import { Page, useSwitchPage } from '../hooks';
 import { ActionButton, ButtonGroup, ChatInput } from '../components';
 import ChatMessageView from '../components/ChatMessageView';
 import { generateRoomCode } from '../commonLogic/generateRoomCode';
+import { useApplication } from '../components/providers/ApplicationContextProvider';
+import { useEffect } from 'react';
+import { useQuery } from '@tanstack/react-query';
 
 const Wrapper = styled.div`
     padding: 40px 10px 40px 10px;
@@ -58,8 +61,25 @@ const ChatBoxInputContainer = styled.div`
 const ChatRoom = (): React.JSX.Element => {
     const {
         navigateTo,
-        params: { chatRoomId }
+        params: { chatRoomNumber }
     } = useSwitchPage();
+
+    const { datasource } = useApplication();
+
+    const {isLoading, data: chatRoomMessages, error} = useQuery({ queryKey: ['getChatRoomMessagesByRoomNumber'],  queryFn: async () => {
+        const response = await datasource.api.chatMessageGetAllByRoomNumber(chatRoomNumber!)
+        return response.data
+    }
+})
+
+    useEffect(() => {
+        // if invalid chatRoomNumber send to dead end page
+        if(chatRoomNumber?.length != 4) {
+            navigateTo(Page.DeadEndPage)
+        }
+    },[])
+
+    console.log(chatRoomMessages)
 
     function handleCreateRoomClick() {
         navigateTo(Page.ChatRoomPage, generateRoomCode());
@@ -67,10 +87,15 @@ const ChatRoom = (): React.JSX.Element => {
     function handleJoinRoomClick() {
         navigateTo(Page.JoinRoomPage);
     }
+
+    if (isLoading) return <>Loading...</>
+
+    if (error) return <>An error has occurred: ' + error.message</>
+
     return (
         <Wrapper>
             <Header>
-                <ChatRoomTitle>room {chatRoomId}</ChatRoomTitle>
+                <ChatRoomTitle>room {chatRoomNumber}</ChatRoomTitle>
                 <ButtonGroup
                     position="relative"
                     gap="50px"
@@ -86,7 +111,7 @@ const ChatRoom = (): React.JSX.Element => {
             </Header>
             <ChatBoxContainer>
                 <ChatBoxViewContainer>
-                    <ChatMessageView />
+                    <ChatMessageView chatRoomMessages={chatRoomMessages || []} />
                 </ChatBoxViewContainer>
                 <ChatBoxInputContainer>
                     <ChatInput />
