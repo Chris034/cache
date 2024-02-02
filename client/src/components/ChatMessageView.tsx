@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import ChatMessage from './ChatMessage';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { ChatMessageDto } from '../api/API';
 const MessageViewWrapper = styled.div`
     background: #232323;
@@ -42,6 +42,7 @@ const MessageContainer = styled.div`
     width: 100%;
 `;
 
+
 interface ChatMessageViewProps {
     chatRoomMessages: ChatMessageDto[];
 }
@@ -55,13 +56,23 @@ const ChatMessageView = (props: ChatMessageViewProps) => {
         }
     }, []);
 
-     const [messages, setMessages] = useState<ChatMessageDto[]>(props.chatRoomMessages)
+    useLayoutEffect(() => {
+        // move scrollbar to bottom if it is close to the bottom on update
+        if (refView?.current) {
+            const element =  refView.current!;
+            const isAtBottomBeforeUpdate = element.scrollHeight - (element.scrollTop + element.clientHeight) <= 200;
+            // if (isAtBottomBeforeUpdate) {
+                element.scrollTop = element.scrollHeight;
+            // }
+        }
+    }, [props.chatRoomMessages]);
+
 
     return (
         <MessageViewWrapper>
             <MessageView ref={refView}>
                 <MessageContainer>
-                    {messages.map((message: ChatMessageDto, index) => {
+                    {props.chatRoomMessages.map((message: ChatMessageDto, index) => {
                         return (
                             <div key={index.toString()}>
                                 <ChatMessage message={message} />

@@ -39,6 +39,7 @@ async function createMessage(req, res)
             
         // Insert the article in our MongoDB database
         const createdMessage = await chatMessage.save()
+        res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3001')
         return res.status(200).json({ messageId: createdMessage._id });
     }
 

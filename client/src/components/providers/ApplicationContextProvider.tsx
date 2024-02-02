@@ -1,5 +1,6 @@
 import { createContext, useContext, useState } from "react";
 import { Api, HttpClient } from "../../api/API";
+import { Socket, io } from "socket.io-client";
 
 function getClientApi(): Api<unknown> {
     const client = new HttpClient({
@@ -13,7 +14,7 @@ export interface ApplicationContext {
 }
 
 export const ApplicationContextInitialState: ApplicationContext = {
-    datasource: getClientApi()
+    datasource: getClientApi(),
 }
 
 export const ApplicationContext = createContext<ApplicationContext>(ApplicationContextInitialState);

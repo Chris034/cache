@@ -12,7 +12,7 @@
 /** Chat-Message */
 export interface ChatMessageDto {
     author: string;
-    content: string;
+    content?: string;
     /** @format date-time */
     createdOn: Date;
     roomNumber: string;

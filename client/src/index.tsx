@@ -10,7 +10,7 @@ const root = ReactDOM.createRoot(
 );
 
 root.render(
-    <React.StrictMode>
+    // <React.StrictMode>
         <QueryClientProvider>
             <ApplicationContextProvider>
                 <BrowserRouter>
@@ -28,5 +28,5 @@ root.render(
                 </BrowserRouter>
             </ApplicationContextProvider>
         </QueryClientProvider>
-    </React.StrictMode>
+    // </React.StrictMode>
 );

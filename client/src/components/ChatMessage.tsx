@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { ChatMessageDto } from '../api/API';
+import { create } from 'domain';
 
 const Message = styled.div`
     padding: 25px;
@@ -46,12 +47,11 @@ interface ChatMessageProps {
 
 const ChatMessage = (props: ChatMessageProps) => {
     const { author: name, content: messageContent, createdOn } = props.message;
-
     return (
         <Message>
             <MessageHeader>
                 <MessageOwnerName>{name}</MessageOwnerName>
-                <MessageCreatedOn>{'2024-01-21 6:01AM'}</MessageCreatedOn>
+                <MessageCreatedOn>{createdOn.toLocaleString()}</MessageCreatedOn>
             </MessageHeader>
             <MessageContent>{messageContent}</MessageContent>
         </Message>

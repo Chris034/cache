@@ -4,8 +4,10 @@ import { ActionButton, ButtonGroup, ChatInput } from '../components';
 import ChatMessageView from '../components/ChatMessageView';
 import { generateRoomCode } from '../commonLogic/generateRoomCode';
 import { useApplication } from '../components/providers/ApplicationContextProvider';
-import { useEffect } from 'react';
-import { useQuery } from '@tanstack/react-query';
+import { useEffect, useState } from 'react';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { ChatMessageDto } from '../api/API';
+import { io } from 'socket.io-client';
 
 const Wrapper = styled.div`
     padding: 40px 10px 40px 10px;
@@ -13,6 +15,7 @@ const Wrapper = styled.div`
     box-sizing: border-box;
     display: flex;
     flex-flow: column;
+
 `;
 
 const Header = styled.div`
@@ -22,6 +25,7 @@ const Header = styled.div`
     display: flex;
     justify-content: space-between;
     padding: 0px 20px 0px 20px;
+    
 `;
 
 const ChatRoomTitle = styled.div`
@@ -32,6 +36,7 @@ const ChatRoomTitle = styled.div`
     letter-spacing: -0.07em;
     text-align: left;
     padding-left: 10px;
+    
 `;
 
 const ChatBoxContainer = styled.div`
@@ -48,6 +53,7 @@ const ChatBoxViewContainer = styled.div`
     padding: 10px 10px 10px 10px;
     overflow-y: auto;
     flex: 1;
+    
 `;
 
 const ChatBoxInputContainer = styled.div`
@@ -56,7 +62,15 @@ const ChatBoxInputContainer = styled.div`
     min-height: 50px;
     margin-top: 15px;
     flex-shrink: 0;
+    
 `;
+
+const socket = io('http://localhost:5000/'); // Replace with your server URL
+
+const joinRoom = (room: string) => {
+    // Join the specified room
+    socket.emit('joinRoom', room);
+};
 
 const ChatRoom = (): React.JSX.Element => {
     const {
@@ -66,20 +80,46 @@ const ChatRoom = (): React.JSX.Element => {
 
     const { datasource } = useApplication();
 
-    const {isLoading, data: chatRoomMessages, error} = useQuery({ queryKey: ['getChatRoomMessagesByRoomNumber'],  queryFn: async () => {
+    const [messages, setMessages] = useState<ChatMessageDto[]>([]);
+
+    const {isLoading, data: chatRoomMessages, error, refetch: refetchChatRoomMessages} = useQuery({ queryKey: ['getChatRoomMessagesByRoomNumber'],  queryFn: async () => {
         const response = await datasource.api.chatMessageGetAllByRoomNumber(chatRoomNumber!)
+        setMessages(response.data)
         return response.data
-    }
-})
+    }})
 
     useEffect(() => {
-        // if invalid chatRoomNumber send to dead end page
+        joinRoom(chatRoomNumber!)
+
+        // Listen for messages from the server
+        socket.on('message', (data: ChatMessageDto) => setMessages(prev => [...prev, data]));
+    
+        // Clean up socket connection on component unmount
+        return () => {
+          socket.disconnect();
+        };
+      }, []);
+
+      
+    useEffect(() => {
         if(chatRoomNumber?.length != 4) {
             navigateTo(Page.DeadEndPage)
         }
-    },[])
+        
+        refetchChatRoomMessages()
+    },[chatRoomNumber])
+    
 
-    console.log(chatRoomMessages)
+    const sendMessage = (content: string) => {
+        // Send message to the server in a specific room
+        socket.emit('message', { room: chatRoomNumber, message: {
+                    username: 'username',
+                    createdOn: new Date(),
+                    content: content,
+                    roomNumber: chatRoomNumber,
+                  }
+         });
+      };
 
     function handleCreateRoomClick() {
         navigateTo(Page.ChatRoomPage, generateRoomCode());
@@ -111,10 +151,10 @@ const ChatRoom = (): React.JSX.Element => {
             </Header>
             <ChatBoxContainer>
                 <ChatBoxViewContainer>
-                    <ChatMessageView chatRoomMessages={chatRoomMessages || []} />
+                    <ChatMessageView chatRoomMessages={messages} />
                 </ChatBoxViewContainer>
                 <ChatBoxInputContainer>
-                    <ChatInput />
+                    <ChatInput onSubmit={sendMessage}/>
                 </ChatBoxInputContainer>
             </ChatBoxContainer>
         </Wrapper>

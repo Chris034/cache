@@ -1,5 +1,6 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
+import { ChatMessageDto } from '../api/API';
 
 const InputBox = styled.textarea`
     justify-content: center;
@@ -40,8 +41,14 @@ const InputBox = styled.textarea`
     }
 `;
 
-const ChatInput = () => {
+interface ChatInputProps {
+    onSubmit: (content: string) => void
+}
+
+const ChatInput = (props: ChatInputProps) => {
     const inputBoxRef = useRef<HTMLTextAreaElement>(null);
+
+    const [chatInput, setChatInput] = useState<string>('');
 
     function autoResize(ref: React.RefObject<HTMLTextAreaElement>) {
         let element: HTMLTextAreaElement | null = ref?.current;
@@ -57,6 +64,20 @@ const ChatInput = () => {
         }
     }
 
+    function handleOnKeyDown(e?: React.KeyboardEvent<HTMLTextAreaElement>) {
+        if(e == undefined) { return; }
+        if(e.key === 'Enter' && e.shiftKey) {
+        } else if (e.key === 'Enter') {
+            props.onSubmit(chatInput);
+            setChatInput('')
+            if (inputBoxRef?.current?.parentElement &&  inputBoxRef?.current) {
+                inputBoxRef.current.parentElement.style.height = '50px'
+                inputBoxRef.current.style.height = '50px'
+            }
+            e.preventDefault()
+        }
+    }
+
     useEffect(() => {
         inputBoxRef?.current?.addEventListener('input', () =>
             autoResize(inputBoxRef)
@@ -69,7 +90,7 @@ const ChatInput = () => {
     }, []);
 
     return (
-        <InputBox placeholder="Enter message..." ref={inputBoxRef}></InputBox>
+        <InputBox value={chatInput} onChange={e => setChatInput(e.target.value)} onKeyDown={handleOnKeyDown} placeholder="Enter message..." ref={inputBoxRef}></InputBox>
     );
 };
 
