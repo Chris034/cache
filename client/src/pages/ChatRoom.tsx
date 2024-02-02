@@ -6,8 +6,8 @@ import { generateRoomCode } from '../commonLogic/generateRoomCode';
 import { useApplication } from '../components/providers/ApplicationContextProvider';
 import { useEffect, useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { ChatMessageDto } from '../api/API';
 import { io } from 'socket.io-client';
+import { ChatMessageDto } from '../api/API';
 
 const Wrapper = styled.div`
     padding: 40px 10px 40px 10px;

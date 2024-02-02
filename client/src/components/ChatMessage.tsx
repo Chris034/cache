@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import { ChatMessageDto } from '../api/API';
-import { create } from 'domain';
 
 const Message = styled.div`
     padding: 25px;
