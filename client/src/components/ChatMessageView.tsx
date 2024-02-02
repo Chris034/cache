@@ -42,7 +42,6 @@ const MessageContainer = styled.div`
     width: 100%;
 `;
 
-
 interface ChatMessageViewProps {
     chatRoomMessages: ChatMessageDto[];
 }
@@ -50,22 +49,23 @@ interface ChatMessageViewProps {
 const ChatMessageView = (props: ChatMessageViewProps) => {
     const refView = useRef<HTMLDivElement>(null);
 
-    useEffect(() => {
-        if (refView?.current) {
-            refView.current.scrollTop = refView.current.scrollHeight;
-        }
-    }, []);
-
     useLayoutEffect(() => {
         // move scrollbar to bottom if it is close to the bottom on update
-        if (refView?.current) {
-            const element =  refView.current!;
-            const isAtBottomBeforeUpdate = element.scrollHeight - (element.scrollTop + element.clientHeight) <= 200;
-            // if (isAtBottomBeforeUpdate) {
-                element.scrollTop = element.scrollHeight;
-            // }
+        const element =  refView?.current!;
+        if (element) {
+            element.lastElementChild?.scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" })           
         }
     }, [props.chatRoomMessages]);
+
+    useEffect(()=> {
+        const element =  refView?.current!;
+        if (element) {
+            // timeout because issue with scrollbar stopping 95% of the way at the bottom
+            setTimeout(() => {
+                element.lastElementChild?.scrollIntoView({ behavior: "instant", block: "end", inline: "nearest" })
+            }, 5);  
+        }
+    },[])
 
 
     return (
