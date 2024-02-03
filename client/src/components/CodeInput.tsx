@@ -37,6 +37,9 @@ const NumberInput = styled.input`
         transform: translateY(-4px) !important;
         transition: all ease-in 0.05s;
     }
+    & .blinkError {
+        background-color: red;
+    }
 `;
 
 const InputForm = styled.form`
@@ -48,9 +51,10 @@ const InputForm = styled.form`
 
 type CodeInputProps = {
     onCodeChange: (code: string) => void;
+    onSubmit: () => boolean
 };
 
-const CodeInput = ({ onCodeChange }: CodeInputProps) => {
+const CodeInput = ({ onCodeChange, onSubmit }: CodeInputProps) => {
     const numInputs = 4;
 
     const inputRefs = useRef<HTMLInputElement[]>([]);
@@ -90,6 +94,8 @@ const CodeInput = ({ onCodeChange }: CodeInputProps) => {
             } else if (e.key === 'Delete') {
                 updateValues(index, '');
                 e.preventDefault();
+            } else if (e.key === 'Enter') {
+                onSubmit() 
             }
         };
 
