@@ -5,9 +5,10 @@ import ChatMessageView from '../components/ChatMessageView';
 import { generateRoomCode } from '../commonLogic/generateRoomCode';
 import { useApplication } from '../components/providers/ApplicationContextProvider';
 import { useEffect, useState } from 'react';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { io } from 'socket.io-client';
 import { ChatMessageDto } from '../api/API';
+import { SOCKET_EVENTS } from '../api/socket/socketEvents';
 
 const Wrapper = styled.div`
     padding: 40px 10px 40px 10px;
@@ -69,7 +70,7 @@ const socket = io('http://localhost:5000/'); // Replace with your server URL
 
 const joinRoom = (room: string) => {
     // Join the specified room
-    socket.emit('joinRoom', room);
+    socket.emit(SOCKET_EVENTS.JOIN_ROOM, room);
 };
 
 const ChatRoom = (): React.JSX.Element => {
@@ -82,7 +83,7 @@ const ChatRoom = (): React.JSX.Element => {
 
     const [messages, setMessages] = useState<ChatMessageDto[]>([]);
 
-    const {isLoading, data: chatRoomMessages, error, refetch: refetchChatRoomMessages} = useQuery({ queryKey: ['getChatRoomMessagesByRoomNumber'],  queryFn: async () => {
+    const {isLoading, error, data, refetch: refetchChatRoomMessages} = useQuery({ queryKey: ['getChatRoomMessagesByRoomNumber'],  queryFn: async () => {
         const response = await datasource.api.chatMessageGetAllByRoomNumber(chatRoomNumber!)
         setMessages(response.data)
         return response.data
@@ -90,9 +91,8 @@ const ChatRoom = (): React.JSX.Element => {
 
     useEffect(() => {
         // listen whenever a message comes in append to messages
-        socket.on('message', (data: ChatMessageDto) => setMessages(prev => [...prev, data]));
+        socket.on(SOCKET_EVENTS.MESSAGE, (data: ChatMessageDto) => setMessages(prev => [...prev, data]));
 
-        // Clean up socket connection on component unmount
         return () => {
           socket.disconnect();
         };
@@ -112,7 +112,7 @@ const ChatRoom = (): React.JSX.Element => {
 
     const sendMessage = (content: string) => {
         // Send message to the server in a specific room
-        socket.emit('message', { room: chatRoomNumber, message: {
+        socket.emit(SOCKET_EVENTS.MESSAGE, { room: chatRoomNumber, message: {
                     username: 'username',
                     createdOn: new Date(),
                     content: content,
@@ -120,7 +120,6 @@ const ChatRoom = (): React.JSX.Element => {
                   }
          });
       };
-
     function handleCreateRoomClick() {
         navigateTo(Page.ChatRoomPage, generateRoomCode());
     }

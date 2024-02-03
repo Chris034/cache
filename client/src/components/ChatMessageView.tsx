@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 import ChatMessage from './ChatMessage';
-import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef } from 'react';
 import { ChatMessageDto } from '../api/API';
+
 const MessageViewWrapper = styled.div`
     background: #232323;
     height: 100%;
@@ -50,7 +51,7 @@ const ChatMessageView = (props: ChatMessageViewProps) => {
     const refView = useRef<HTMLDivElement>(null);
 
     useLayoutEffect(() => {
-        // move scrollbar to bottom if it is close to the bottom on update
+        // move scrollbar to bottom on update
         const element =  refView?.current!;
         if (element) {
             element.lastElementChild?.scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" })           

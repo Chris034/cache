@@ -1,14 +1,14 @@
 import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 
-const InputBox = styled.textarea`
+const InputBox = styled.textarea<{$height: string; }>`
     justify-content: center;
     width: 97%;
     font-family: IBM Plex Sans;
     font-size: 16px;
     box-sizing: border-box;
     background-color: #1a1a1a;
-    height: 50px;
+    height: ${props => props.$height};
     color: #ffffff;
     border: none;
     display: block;
@@ -44,6 +44,10 @@ interface ChatInputProps {
     onSubmit: (content: string) => void
 }
 
+const MIN_INPUT_HEIGHT = 50;
+const MAX_INPUT_HEIGHT = 350;
+
+
 const ChatInput = (props: ChatInputProps) => {
     const inputBoxRef = useRef<HTMLTextAreaElement>(null);
 
@@ -53,8 +57,8 @@ const ChatInput = (props: ChatInputProps) => {
         let element: HTMLTextAreaElement | null = ref?.current;
         if (
             element &&
-            element.scrollHeight >= 50 &&
-            element.scrollHeight <= 350 &&
+            element.scrollHeight >= MIN_INPUT_HEIGHT &&
+            element.scrollHeight <= MAX_INPUT_HEIGHT &&
             element.parentElement
         ) {
             element.style.height = '1px';
@@ -70,8 +74,8 @@ const ChatInput = (props: ChatInputProps) => {
             props.onSubmit(chatInput);
             setChatInput('')
             if (inputBoxRef?.current?.parentElement &&  inputBoxRef?.current) {
-                inputBoxRef.current.parentElement.style.height = '50px'
-                inputBoxRef.current.style.height = '50px'
+                inputBoxRef.current.parentElement.style.height = `${MIN_INPUT_HEIGHT}px`
+                inputBoxRef.current.style.height = `${MIN_INPUT_HEIGHT}px`
             }
             e.preventDefault()
         }
@@ -89,7 +93,7 @@ const ChatInput = (props: ChatInputProps) => {
     }, []);
 
     return (
-        <InputBox value={chatInput} onChange={e => setChatInput(e.target.value)} onKeyDown={handleOnKeyDown} placeholder="Enter message..." ref={inputBoxRef}></InputBox>
+        <InputBox $height={`${MIN_INPUT_HEIGHT}px`} value={chatInput} onChange={e => setChatInput(e.target.value)} onKeyDown={handleOnKeyDown} placeholder="Enter message..." ref={inputBoxRef}></InputBox>
     );
 };
 
