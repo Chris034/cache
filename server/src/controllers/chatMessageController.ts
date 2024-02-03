@@ -11,7 +11,6 @@ async function getMessagesByRoom(req, res)
     if (result.isEmpty()) {
         const roomNumber = req.params.roomNumber
         const roomMessages = await ChatMessage.find({ roomNumber: roomNumber })
-        res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3001')
         return res.status(200).json( roomMessages );
     }
 
@@ -39,7 +38,6 @@ async function createMessage(req, res)
             
         // Insert the article in our MongoDB database
         const createdMessage = await chatMessage.save()
-        res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3001')
         return res.status(200).json({ messageId: createdMessage._id });
     }
 
@@ -60,6 +58,7 @@ async function deleteMessage(req, res)
     }
 
     res.status(400).send({ errors: result.array() });
+
 } 
 
 export default {

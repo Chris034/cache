@@ -89,11 +89,9 @@ const ChatRoom = (): React.JSX.Element => {
     }})
 
     useEffect(() => {
-        joinRoom(chatRoomNumber!)
-
-        // Listen for messages from the server
+        // listen whenever a message comes in append to messages
         socket.on('message', (data: ChatMessageDto) => setMessages(prev => [...prev, data]));
-    
+
         // Clean up socket connection on component unmount
         return () => {
           socket.disconnect();
@@ -102,10 +100,12 @@ const ChatRoom = (): React.JSX.Element => {
 
       
     useEffect(() => {
+        // whenver a the room number changes, verify its a valid room number
         if(chatRoomNumber?.length != 4) {
             navigateTo(Page.DeadEndPage)
         }
-        
+        // and update the socket and fetch all existing messages
+        joinRoom(chatRoomNumber!)
         refetchChatRoomMessages()
     },[chatRoomNumber])
     

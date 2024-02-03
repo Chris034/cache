@@ -30,10 +30,6 @@ const chatMessageRouter = express.Router()
      *                $ref: '#/components/schemas/chatMessageDto'
      *      400:
      *        description: Bad Request
-     *      404:
-     *        description: Not Found
-     *      500:
-     *        description: Server Error
      */
     chatMessageRouter.get('/:roomNumber', chatMessage.getMessagesByRoomValidator, chatMessage.getMessagesByRoom)
 
@@ -71,8 +67,6 @@ const chatMessageRouter = express.Router()
      *        description: Created
      *      400:
      *        description: Bad request
-     *      500:
-     *        description: Server Error
      */
 chatMessageRouter.post('/', chatMessage.createMessageValidator, chatMessage.createMessage)
 
@@ -93,15 +87,9 @@ chatMessageRouter.post('/', chatMessage.createMessageValidator, chatMessage.crea
      *     responses:
      *      200:
      *        description: Removed
-     *      400:
-     *        description: Bad request
      *      404:
      *        description: Not Found
-     *      500:
-     *        description: Server Error
      */
     chatMessageRouter.delete('/:messageId', chatMessage.deleteMessageValidator, chatMessage.deleteMessage)
-
-
 
 export default chatMessageRouter;
