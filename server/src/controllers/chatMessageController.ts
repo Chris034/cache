@@ -1,5 +1,5 @@
 import { body, param, validationResult } from "express-validator";
-import ChatMessage from "../schema/chatMessageSchema";
+import ChatMessage from "../db-schema/chatMessageSchema";
 
 const getMessagesByRoomValidator = [
     param('roomNumber', 'room number is required to be 4 digit integer').isNumeric().isLength({min:4, max:4}),
@@ -32,7 +32,7 @@ async function createMessage(req, res)
         const chatMessage = new ChatMessage({
             roomNumber: req.body.roomNumber,
             content:  req.body.content,
-            author:  req.body.username,
+            username:  req.body.username,
             createdOn:  req.body.createdOn,
           });
             

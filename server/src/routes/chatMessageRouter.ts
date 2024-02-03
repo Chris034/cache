@@ -27,7 +27,7 @@ const chatMessageRouter = express.Router()
      *            schema:
      *              type: array
      *              items:
-     *                $ref: '#/components/schemas/chatMessageDto'
+     *                $ref: '#/components/schemas/ChatMessageDto'
      *      400:
      *        description: Bad Request
      */
@@ -47,21 +47,7 @@ const chatMessageRouter = express.Router()
      *      content:
      *        application/json:
      *           schema:
-     *            type: object
-     *            required:
-     *              - content
-     *              - createdOn
-     *              - username
-     *              - roomNumber
-     *            properties:
-     *              username:
-     *                type: string
-     *              createdOn:
-     *                type: string
-     *              content:
-     *                type: string
-     *              roomNumber:
-     *                  type: integer
+     *             $ref: '#/components/schemas/ChatMessageDto'
      *     responses:
      *      201:
      *        description: Created

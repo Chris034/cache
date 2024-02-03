@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
-import { ChatMessageDto } from '../api/API';
 
 const InputBox = styled.textarea`
     justify-content: center;

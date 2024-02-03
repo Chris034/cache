@@ -1,5 +1,5 @@
 import { Server } from "socket.io";
-import ChatMessage from "../schema/chatMessageSchema";
+import ChatMessage from "../db-schema/chatMessageSchema";
 
 function initalizeChatRoomSocket(io: Server) {
     io.on('connection', (socket) => {
@@ -18,7 +18,7 @@ function initalizeChatRoomSocket(io: Server) {
               const chatMessage = new ChatMessage({
                 roomNumber: data.message.roomNumber,
                 content: data.message.content,
-                author:  data.message.username,
+                username:  data.message.username,
                 createdOn:  data.message.createdOn,
               });
               await chatMessage.save();

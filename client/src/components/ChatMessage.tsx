@@ -45,12 +45,15 @@ interface ChatMessageProps {
 }
 
 const ChatMessage = (props: ChatMessageProps) => {
-    const { author: name, content: messageContent, createdOn } = props.message;
+    const { username, content: messageContent, createdOn } = props.message;
+    const date = new Date(createdOn!)
+    const day = date.toLocaleDateString('en-US')
+    const time = date.toLocaleTimeString('en-US')
     return (
         <Message>
             <MessageHeader>
-                <MessageOwnerName>{name}</MessageOwnerName>
-                <MessageCreatedOn>{createdOn.toLocaleString()}</MessageCreatedOn>
+                <MessageOwnerName>{username}</MessageOwnerName>
+                <MessageCreatedOn>{day + ' ' + time}</MessageCreatedOn>
             </MessageHeader>
             <MessageContent>{messageContent}</MessageContent>
         </Message>

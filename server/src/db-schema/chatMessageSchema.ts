@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 const { Schema, model } = mongoose;
 
 const chatMessageSchema = new Schema({
-  author: {
+  username: {
     type: String,
     required: true,
 

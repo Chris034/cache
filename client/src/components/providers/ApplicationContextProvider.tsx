@@ -1,10 +1,9 @@
 import { createContext, useContext, useState } from "react";
 import { Api, HttpClient } from "../../api/API";
-import { Socket, io } from "socket.io-client";
 
 function getClientApi(): Api<unknown> {
     const client = new HttpClient({
-        baseUrl: 'http://localhost:5000'
+        baseUrl: `http://localhost:5000`
     })
     return new Api(client);
 }

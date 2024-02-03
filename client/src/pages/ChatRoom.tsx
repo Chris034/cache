@@ -130,7 +130,7 @@ const ChatRoom = (): React.JSX.Element => {
 
     if (isLoading) return <>Loading...</>
 
-    if (error) return <>An error has occurred: ' + error.message</>
+    if (error) return <>An error has occurred: + {error.message}</>
 
     return (
         <Wrapper>
@@ -141,7 +141,6 @@ const ChatRoom = (): React.JSX.Element => {
                     gap="50px"
                     style={{ maxWidth: '30vw' }}
                 >
-                    
                     <ActionButton onClick={handleCreateRoomClick}>
                         make a room
                     </ActionButton>
