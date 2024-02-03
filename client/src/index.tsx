@@ -10,22 +10,22 @@ const root = ReactDOM.createRoot(
 
 root.render(
     // <React.StrictMode>
-        <QueryClientProvider>
-            <ApplicationContextProvider>
-                <BrowserRouter>
-                    <Routes>
-                        <Route path="/" element={<Layout />}>
-                            <Route index element={<Home />} />
-                            <Route path="join-room" element={<JoinRoom />} />
-                            <Route
-                                path="chat-room/:chatRoomNumber"
-                                element={<ChatRoom />}
-                            />
-                            <Route path="*" element={<DeadEnd />} />
-                        </Route>
-                    </Routes>
-                </BrowserRouter>
-            </ApplicationContextProvider>
-        </QueryClientProvider>
+    <QueryClientProvider>
+        <ApplicationContextProvider>
+            <BrowserRouter>
+                <Routes>
+                    <Route path="/" element={<Layout />}>
+                        <Route index element={<Home />} />
+                        <Route path="join-room" element={<JoinRoom />} />
+                        <Route
+                            path="chat-room/:chatRoomNumber"
+                            element={<ChatRoom />}
+                        />
+                        <Route path="*" element={<DeadEnd />} />
+                    </Route>
+                </Routes>
+            </BrowserRouter>
+        </ApplicationContextProvider>
+    </QueryClientProvider>
     // </React.StrictMode>
 );

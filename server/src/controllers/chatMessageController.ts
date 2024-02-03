@@ -1,65 +1,68 @@
-import { body, param, validationResult } from "express-validator";
-import ChatMessage from "../db-schema/chatMessageSchema";
+import { body, param, validationResult } from 'express-validator';
+import ChatMessage from '../db-schema/chatMessageSchema';
 
 const getMessagesByRoomValidator = [
-    param('roomNumber', 'room number is required to be 4 digit integer').isNumeric().isLength({min:4, max:4}),
-  ]
-  
-async function getMessagesByRoom(req, res)
-{
+    param('roomNumber', 'room number is required to be 4 digit integer')
+        .isNumeric()
+        .isLength({ min: 4, max: 4 })
+];
+
+async function getMessagesByRoom(req, res) {
     const result = validationResult(req);
     if (result.isEmpty()) {
-        const roomNumber = req.params.roomNumber
-        const roomMessages = await ChatMessage.find({ roomNumber: roomNumber })
-        return res.status(200).json( roomMessages );
+        const roomNumber = req.params.roomNumber;
+        const roomMessages = await ChatMessage.find({ roomNumber: roomNumber });
+        return res.status(200).json(roomMessages);
     }
 
     res.status(400).send({ errors: result.array() });
-} 
+}
 
 const createMessageValidator = [
     body('createdOn', 'date must be Date').isISO8601(),
     body('username', 'username cannot be Empty').not().isEmpty(),
-    body('roomNumber', 'room number is required to be 4 digit integer').isNumeric().isLength({min:4, max:4}),
-  ]
+    body('roomNumber', 'room number is required to be 4 digit integer')
+        .isNumeric()
+        .isLength({ min: 4, max: 4 })
+];
 
-async function createMessage(req, res)
-{
+async function createMessage(req, res) {
     const result = validationResult(req);
 
     if (result.isEmpty()) {
-
         const chatMessage = new ChatMessage({
             roomNumber: req.body.roomNumber,
-            content:  req.body.content,
-            username:  req.body.username,
-            createdOn:  req.body.createdOn,
-          });
-            
+            content: req.body.content,
+            username: req.body.username,
+            createdOn: req.body.createdOn
+        });
+
         // Insert the article in our MongoDB database
-        const createdMessage = await chatMessage.save()
+        const createdMessage = await chatMessage.save();
         return res.status(200).json({ messageId: createdMessage._id });
     }
 
-    res.status(400).send({ errors: result.array() });} 
+    res.status(400).send({ errors: result.array() });
+}
 
 const deleteMessageValidator = [
-    param('messageId', 'messageId must exist').exists().isMongoId().custom(ChatMessage.exists)
-  ]
-  
-async function deleteMessage(req, res)
-{
+    param('messageId', 'messageId must exist')
+        .exists()
+        .isMongoId()
+        .custom(ChatMessage.exists)
+];
+
+async function deleteMessage(req, res) {
     const result = validationResult(req);
     if (result.isEmpty()) {
-        const messageId = req.params.messageId
+        const messageId = req.params.messageId;
         const deletedMessage = await ChatMessage.deleteOne({ _id: messageId });
 
         return res.status(200).json(deletedMessage);
     }
 
     res.status(400).send({ errors: result.array() });
-
-} 
+}
 
 export default {
     getMessagesByRoom,
@@ -68,4 +71,4 @@ export default {
     createMessageValidator,
     deleteMessage,
     deleteMessageValidator
-}
+};

@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { device } from "../designSystem/screenSizeConfig";
+import styled from 'styled-components';
+import { device } from '../designSystem/screenSizeConfig';
 
 export const TitleContainer = styled.div<{
     $translateX?: number;
@@ -68,7 +68,7 @@ export const ButtonGroup = styled.div<{
     position: ${(props) => props.$position || 'absolute'};
     display: flex;
     flex-direction: row;
-    justify-content: ${(props) => props. $justifyContent || 'center'};
+    justify-content: ${(props) => props.$justifyContent || 'center'};
     align-items: center;
     margin-top: ${(props) => props.$marginTop || 0};
     left: 0;

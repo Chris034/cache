@@ -1,1 +1,1 @@
-export { useSwitchPage, Page} from "./useSwitchPage.tsx"
+export { useSwitchPage, Page } from './useSwitchPage.tsx';

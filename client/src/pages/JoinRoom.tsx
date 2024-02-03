@@ -32,7 +32,10 @@ const JoinRoom = (): React.JSX.Element => {
             <JoinRoomDescription>
                 Enter the 4-digit code below to join the room.
             </JoinRoomDescription>
-            <CodeInput onCodeChange={setRoomCode} onSubmit={(() => handleJoinClick())}/>
+            <CodeInput
+                onCodeChange={setRoomCode}
+                onSubmit={() => handleJoinClick()}
+            />
             <ButtonGroup $marginTop="75px" $gap="210px">
                 <ActionButton onClick={handleJoinClick}>join</ActionButton>
             </ButtonGroup>

@@ -52,7 +52,7 @@ const InputForm = styled.form`
 
 type CodeInputProps = {
     onCodeChange: (code: string) => void;
-    onSubmit: () => void
+    onSubmit: () => void;
 };
 
 const CodeInput = ({ onCodeChange, onSubmit }: CodeInputProps) => {
@@ -70,9 +70,8 @@ const CodeInput = ({ onCodeChange, onSubmit }: CodeInputProps) => {
     };
 
     useEffect(() => {
-        onCodeChange(values.join(''))
-    },[values])
-
+        onCodeChange(values.join(''));
+    }, [values]);
 
     const handleOnNumberInput =
         (index: number) => (e: ChangeEvent<HTMLInputElement>) => {
@@ -100,7 +99,7 @@ const CodeInput = ({ onCodeChange, onSubmit }: CodeInputProps) => {
                 updateValues(index, '');
                 e.preventDefault();
             } else if (e.key === 'Enter') {
-                onSubmit()
+                onSubmit();
             }
         };
 

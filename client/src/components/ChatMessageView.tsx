@@ -35,7 +35,6 @@ const MessageView = styled.div`
 
     &::-webkit-scrollbar-thumb:hover {
         background-color: #666666;
-        
     }
 `;
 
@@ -52,34 +51,43 @@ const ChatMessageView = (props: ChatMessageViewProps) => {
 
     useLayoutEffect(() => {
         // move scrollbar to bottom on update
-        const element =  refView?.current!;
+        const element = refView?.current!;
         if (element) {
-            element.lastElementChild?.scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" })           
+            element.lastElementChild?.scrollIntoView({
+                behavior: 'smooth',
+                block: 'end',
+                inline: 'nearest'
+            });
         }
     }, [props.chatRoomMessages]);
 
-    useEffect(()=> {
-        const element =  refView?.current!;
+    useEffect(() => {
+        const element = refView?.current!;
         if (element) {
             // timeout because issue with scrollbar stopping 95% of the way at the bottom
             setTimeout(() => {
-                element.lastElementChild?.scrollIntoView({ behavior: "instant", block: "end", inline: "nearest" })
-            }, 5);  
+                element.lastElementChild?.scrollIntoView({
+                    behavior: 'instant',
+                    block: 'end',
+                    inline: 'nearest'
+                });
+            }, 5);
         }
-    },[])
-
+    }, []);
 
     return (
         <MessageViewWrapper>
             <MessageView ref={refView}>
                 <MessageContainer>
-                    {props.chatRoomMessages.map((message: ChatMessageDto, index) => {
-                        return (
-                            <div key={index.toString()}>
-                                <ChatMessage message={message} />
-                            </div>
-                        );
-                    })}
+                    {props.chatRoomMessages.map(
+                        (message: ChatMessageDto, index) => {
+                            return (
+                                <div key={index.toString()}>
+                                    <ChatMessage message={message} />
+                                </div>
+                            );
+                        }
+                    )}
                 </MessageContainer>
             </MessageView>
         </MessageViewWrapper>

@@ -16,7 +16,6 @@ const Wrapper = styled.div`
     box-sizing: border-box;
     display: flex;
     flex-flow: column;
-
 `;
 
 const Header = styled.div`
@@ -26,7 +25,6 @@ const Header = styled.div`
     display: flex;
     justify-content: space-between;
     padding: 0px 20px 0px 20px;
-    
 `;
 
 const ChatRoomTitle = styled.div`
@@ -37,7 +35,6 @@ const ChatRoomTitle = styled.div`
     letter-spacing: -0.07em;
     text-align: left;
     padding-left: 10px;
-    
 `;
 
 const ChatBoxContainer = styled.div`
@@ -46,7 +43,7 @@ const ChatBoxContainer = styled.div`
     flex-grow: 1;
     box-sizing: border-box;
     max-height: 83vh;
-    overflow: hidden
+    overflow: hidden;
 `;
 
 const ChatBoxViewContainer = styled.div`
@@ -54,7 +51,6 @@ const ChatBoxViewContainer = styled.div`
     padding: 10px 10px 10px 10px;
     overflow-y: auto;
     flex: 1;
-    
 `;
 
 const ChatBoxInputContainer = styled.div`
@@ -63,7 +59,6 @@ const ChatBoxInputContainer = styled.div`
     min-height: 50px;
     margin-top: 15px;
     flex-shrink: 0;
-    
 `;
 
 const socket = io('http://localhost:5000/'); // Replace with your server URL
@@ -78,52 +73,62 @@ const ChatRoom = (): React.JSX.Element => {
 
     const [messages, setMessages] = useState<ChatMessageDto[]>([]);
 
-    const {isLoading, error, data, refetch: refetchChatRoomMessages} = useQuery({ queryKey: ['getChatRoomMessagesByRoomNumber'],  queryFn: async () => {
-        const response = await datasource.api.chatMessageGetAllByRoomNumber(chatRoomNumber!)
-        setMessages(response.data)
-        return response.data
-    }})
+    const {
+        isLoading,
+        error,
+        data,
+        refetch: refetchChatRoomMessages
+    } = useQuery({
+        queryKey: ['getChatRoomMessagesByRoomNumber'],
+        queryFn: async () => {
+            const response = await datasource.api.chatMessageGetAllByRoomNumber(
+                chatRoomNumber!
+            );
+            setMessages(response.data);
+            return response.data;
+        }
+    });
 
     const joinRoom = (room: string) => {
         // Join the specified room
         socket.emit(SOCKET_EVENTS.JOIN_ROOM, room);
     };
-    
 
     useEffect(() => {
         // listen whenever a message comes in append to messages
-        socket.on(SOCKET_EVENTS.MESSAGE, (data: ChatMessageDto) => setMessages(prev => [...prev, data]));
-        joinRoom(chatRoomNumber!)
+        socket.on(SOCKET_EVENTS.MESSAGE, (data: ChatMessageDto) =>
+            setMessages((prev) => [...prev, data])
+        );
+        joinRoom(chatRoomNumber!);
 
         return () => {
-          socket.disconnect();
+            socket.disconnect();
         };
-      }, []);
+    }, []);
 
-      
     useEffect(() => {
         // whenver a the room number changes, verify its a valid room number
-        if(chatRoomNumber?.length != 4) {
-            navigateTo(Page.DeadEndPage)
+        if (chatRoomNumber?.length != 4) {
+            navigateTo(Page.DeadEndPage);
         }
 
-        console.log(';ajkasd')
         // and update the socket and fetch all existing messages
-        joinRoom(chatRoomNumber!)
-        refetchChatRoomMessages()
-    },[chatRoomNumber])
-    
+        joinRoom(chatRoomNumber!);
+        refetchChatRoomMessages();
+    }, [chatRoomNumber]);
 
     const sendMessage = (content: string) => {
         // Send message to the server in a specific room
-        socket.emit(SOCKET_EVENTS.MESSAGE, { room: chatRoomNumber, message: {
-                    username: 'username',
-                    createdOn: new Date(),
-                    content: content,
-                    roomNumber: chatRoomNumber,
-                  }
-         });
-      };
+        socket.emit(SOCKET_EVENTS.MESSAGE, {
+            room: chatRoomNumber,
+            message: {
+                username: 'username',
+                createdOn: new Date(),
+                content: content,
+                roomNumber: chatRoomNumber
+            }
+        });
+    };
     function handleCreateRoomClick() {
         navigateTo(Page.ChatRoomPage, generateRoomCode());
     }
@@ -131,9 +136,9 @@ const ChatRoom = (): React.JSX.Element => {
         navigateTo(Page.JoinRoomPage);
     }
 
-    if (isLoading) return <>Loading...</>
+    if (isLoading) return <>Loading...</>;
 
-    if (error) return <>An error has occurred: + {error.message}</>
+    if (error) return <>An error has occurred: + {error.message}</>;
 
     return (
         <Wrapper>
@@ -157,7 +162,7 @@ const ChatRoom = (): React.JSX.Element => {
                     <ChatMessageView chatRoomMessages={messages} />
                 </ChatBoxViewContainer>
                 <ChatBoxInputContainer>
-                    <ChatInput onSubmit={sendMessage}/>
+                    <ChatInput onSubmit={sendMessage} />
                 </ChatBoxInputContainer>
             </ChatBoxContainer>
         </Wrapper>
