@@ -34,7 +34,7 @@ const Home = (): React.JSX.Element => {
             <Description>
                 Connect, share, and communicate with peace of mind.
             </Description>
-            <ButtonGroup marginTop="75px" gap="210px">
+            <ButtonGroup $marginTop="75px" $gap="210px">
                 <ActionButton onClick={handleCreateRoomClick}>
                     make a room
                 </ActionButton>

@@ -20,12 +20,10 @@ const JoinRoom = (): React.JSX.Element => {
 
     const [roomCode, setRoomCode] = useState<string>('');
 
-    const handleJoinClick = (): boolean => {
+    const handleJoinClick = () => {
         if (roomCode?.trim().length == 4) {
             navigateTo(Page.ChatRoomPage, roomCode);
-            return true;
         }
-        return false
     };
 
     return (
@@ -35,7 +33,7 @@ const JoinRoom = (): React.JSX.Element => {
                 Enter the 4-digit code below to join the room.
             </JoinRoomDescription>
             <CodeInput onCodeChange={setRoomCode} onSubmit={(() => handleJoinClick())}/>
-            <ButtonGroup marginTop="75px" gap="210px">
+            <ButtonGroup $marginTop="75px" $gap="210px">
                 <ActionButton onClick={handleJoinClick}>join</ActionButton>
             </ButtonGroup>
         </TitleContainer>

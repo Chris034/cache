@@ -2,8 +2,8 @@ import styled from "styled-components";
 import { device } from "../designSystem/screenSizeConfig";
 
 export const TitleContainer = styled.div<{
-    translateX?: number;
-    translateY?: number;
+    $translateX?: number;
+    $translateY?: number;
 }>`
     padding: 10px;
     position: absolute;
@@ -17,8 +17,8 @@ export const TitleContainer = styled.div<{
         left: 12%;
         top: 20%;
         transform: translate(
-            ${(props) => (props.translateX ? props.translateX : 0)}%,
-            ${(props) => (props.translateY ? props.translateY : 0)}%
+            ${(props) => (props.$translateX ? props.$translateX : 0)}%,
+            ${(props) => (props.$translateY ? props.$translateY : 0)}%
         );
         width: 75%;
     }
@@ -60,20 +60,20 @@ export const Description = styled.div`
 `;
 
 export const ButtonGroup = styled.div<{
-    gap?: string;
-    marginTop?: string;
-    position?: string;
-    justifyContent?: string;
+    $gap?: string;
+    $marginTop?: string;
+    $position?: string;
+    $justifyContent?: string;
 }>`
-    position: ${(props) => props.position || 'absolute'};
+    position: ${(props) => props.$position || 'absolute'};
     display: flex;
     flex-direction: row;
-    justify-content: ${(props) => props.justifyContent || 'center'};
+    justify-content: ${(props) => props. $justifyContent || 'center'};
     align-items: center;
-    margin-top: ${(props) => props.marginTop || 0};
+    margin-top: ${(props) => props.$marginTop || 0};
     left: 0;
     width: 100%;
-    gap: ${(props) => props.gap || 0};
+    gap: ${(props) => props.$gap || 0};
 `;
 
 export const ActionButton = styled.button`

@@ -3,7 +3,8 @@ import {
     useState,
     KeyboardEvent,
     ChangeEvent,
-    ClipboardEvent
+    ClipboardEvent,
+    useEffect
 } from 'react';
 import styled from 'styled-components';
 
@@ -51,7 +52,7 @@ const InputForm = styled.form`
 
 type CodeInputProps = {
     onCodeChange: (code: string) => void;
-    onSubmit: () => boolean
+    onSubmit: () => void
 };
 
 const CodeInput = ({ onCodeChange, onSubmit }: CodeInputProps) => {
@@ -64,10 +65,14 @@ const CodeInput = ({ onCodeChange, onSubmit }: CodeInputProps) => {
     const updateValues = (index: number, value: string) => {
         setValues((values) => {
             let newVal = values.map((val, i) => (i == index ? value : val));
-            onCodeChange(newVal.join(''));
             return newVal;
         });
     };
+
+    useEffect(() => {
+        onCodeChange(values.join(''))
+    },[values])
+
 
     const handleOnNumberInput =
         (index: number) => (e: ChangeEvent<HTMLInputElement>) => {
@@ -95,7 +100,7 @@ const CodeInput = ({ onCodeChange, onSubmit }: CodeInputProps) => {
                 updateValues(index, '');
                 e.preventDefault();
             } else if (e.key === 'Enter') {
-                onSubmit() 
+                onSubmit()
             }
         };
 

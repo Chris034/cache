@@ -68,11 +68,6 @@ const ChatBoxInputContainer = styled.div`
 
 const socket = io('http://localhost:5000/'); // Replace with your server URL
 
-const joinRoom = (room: string) => {
-    // Join the specified room
-    socket.emit(SOCKET_EVENTS.JOIN_ROOM, room);
-};
-
 const ChatRoom = (): React.JSX.Element => {
     const {
         navigateTo,
@@ -89,9 +84,16 @@ const ChatRoom = (): React.JSX.Element => {
         return response.data
     }})
 
+    const joinRoom = (room: string) => {
+        // Join the specified room
+        socket.emit(SOCKET_EVENTS.JOIN_ROOM, room);
+    };
+    
+
     useEffect(() => {
         // listen whenever a message comes in append to messages
         socket.on(SOCKET_EVENTS.MESSAGE, (data: ChatMessageDto) => setMessages(prev => [...prev, data]));
+        joinRoom(chatRoomNumber!)
 
         return () => {
           socket.disconnect();
@@ -104,6 +106,8 @@ const ChatRoom = (): React.JSX.Element => {
         if(chatRoomNumber?.length != 4) {
             navigateTo(Page.DeadEndPage)
         }
+
+        console.log(';ajkasd')
         // and update the socket and fetch all existing messages
         joinRoom(chatRoomNumber!)
         refetchChatRoomMessages()
@@ -136,8 +140,8 @@ const ChatRoom = (): React.JSX.Element => {
             <Header>
                 <ChatRoomTitle>room {chatRoomNumber}</ChatRoomTitle>
                 <ButtonGroup
-                    position="relative"
-                    gap="50px"
+                    $position="relative"
+                    $gap="50px"
                     style={{ maxWidth: '30vw' }}
                 >
                     <ActionButton onClick={handleCreateRoomClick}>
