@@ -1,6 +1,7 @@
 import { io } from 'socket.io-client';
 
-// "undefined" means the URL will be computed from the `window.location` object
-const URL = process.env.NODE_ENV === 'production' ? undefined : 'http://localhost:5000/';
+const URL = process.env.REACT_APP_ENV === 'production'
+? process.env.REACT_APP_API_PROD_ENDPOINT
+: process.env.REACT_APP_API_DEV_ENDPOINT
 
 export const socket = io(URL);

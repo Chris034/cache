@@ -5,7 +5,10 @@ import { generateUserName } from '../../utility/usernameGeneration';
 
 function getClientApi(): Api<unknown> {
     const client = new HttpClient({
-        baseUrl: `http://localhost:5000`
+        baseUrl:
+            process.env.REACT_APP_ENV === 'production'
+                ? process.env.REACT_APP_API_PROD_ENDPOINT
+                : process.env.REACT_APP_API_DEV_ENDPOINT
     });
     return new Api(client);
 }

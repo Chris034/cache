@@ -2,12 +2,16 @@ const { generateApi, generateTemplates } = require('swagger-typescript-api');
 const path = require("path");
 const fs = require("fs");
 
+const url = `${process.env.REACT_APP_ENV === 'production'
+? process.env.REACT_APP_API_PROD_ENDPOINT
+: process.env.REACT_APP_API_DEV_ENDPOINT}/docs.json`
+
 /* NOTE: all fields are optional expect one of `input`, `url`, `spec` */
 generateApi({
   name: "API.ts",
   // set to `false` to prevent the tool from writing to disk
   output: path.resolve(process.cwd(), "./src/api"),
-  url: 'http://localhost:5000/docs.json',
+  url: url,
   httpClientType: "fetch", // or "fetch"
   defaultResponseAsSuccess: false,
   generateClient: true,
