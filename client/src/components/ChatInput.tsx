@@ -71,7 +71,7 @@ const ChatInput = (props: ChatInputProps) => {
         }
         if (e.key === 'Enter' && e.shiftKey) {
         } else if (e.key === 'Enter') {
-            props.onSubmit(chatInput);
+            chatInput.length > 0 && props.onSubmit(chatInput);
             setChatInput('');
             if (inputBoxRef?.current?.parentElement && inputBoxRef?.current) {
                 inputBoxRef.current.parentElement.style.height = `${MIN_INPUT_HEIGHT}px`;
@@ -80,6 +80,8 @@ const ChatInput = (props: ChatInputProps) => {
             e.preventDefault();
         }
     }
+
+    console.log(chatInput);
 
     useEffect(() => {
         inputBoxRef?.current?.addEventListener('input', () =>
@@ -91,7 +93,6 @@ const ChatInput = (props: ChatInputProps) => {
             );
         };
     }, []);
-
     return (
         <InputBox
             $height={`${MIN_INPUT_HEIGHT}px`}

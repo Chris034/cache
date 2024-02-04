@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { ChatMessageDto } from '../api/API';
+import { generateColorByUser } from '../utility/usernameGeneration';
 
 const Message = styled.div`
     padding: 25px;
@@ -23,10 +24,12 @@ const MessageHeader = styled.div`
     align-items: center;
 `;
 
-const MessageOwnerName = styled.div`
+const MessageUserName = styled.div<{
+    $color: string;
+}>`
     font-family: IBM Plex Sans;
     font-size: 18px;
-    color: pink;
+    color: ${(props) => props.$color};
     font-weight: 900;
 `;
 const MessageCreatedOn = styled.div`
@@ -49,10 +52,11 @@ const ChatMessage = (props: ChatMessageProps) => {
     const date = new Date(createdOn!);
     const day = date.toLocaleDateString('en-US');
     const time = date.toLocaleTimeString('en-US');
+    const color = generateColorByUser(username);
     return (
         <Message>
             <MessageHeader>
-                <MessageOwnerName>{username}</MessageOwnerName>
+                <MessageUserName $color={color}>{username}</MessageUserName>
                 <MessageCreatedOn>{day + ' ' + time}</MessageCreatedOn>
             </MessageHeader>
             <MessageContent>{messageContent}</MessageContent>

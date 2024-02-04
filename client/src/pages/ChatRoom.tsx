@@ -2,13 +2,14 @@ import styled from 'styled-components';
 import { Page, useSwitchPage } from '../hooks';
 import { ActionButton, ButtonGroup, ChatInput } from '../components';
 import ChatMessageView from '../components/ChatMessageView';
-import { generateRoomCode } from '../commonLogic/generateRoomCode';
+import { generateRoomCode } from '../utility/generateRoomCode';
 import { useApplication } from '../components/providers/ApplicationContextProvider';
 import { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { io } from 'socket.io-client';
 import { ChatMessageDto } from '../api/API';
 import { SOCKET_EVENTS } from '../api/socket/socketEvents';
+import { socket } from '../socket/socket';
 
 const Wrapper = styled.div`
     padding: 40px 10px 40px 10px;
@@ -61,22 +62,20 @@ const ChatBoxInputContainer = styled.div`
     flex-shrink: 0;
 `;
 
-const socket = io('http://localhost:5000/'); // Replace with your server URL
-
 const ChatRoom = (): React.JSX.Element => {
     const {
         navigateTo,
         params: { chatRoomNumber }
     } = useSwitchPage();
 
-    const { datasource } = useApplication();
+    const { datasource, username } = useApplication();
 
     const [messages, setMessages] = useState<ChatMessageDto[]>([]);
 
     const {
         isLoading,
         error,
-        data,
+        data: chatRoomMessages,
         refetch: refetchChatRoomMessages
     } = useQuery({
         queryKey: ['getChatRoomMessagesByRoomNumber'],
@@ -99,11 +98,6 @@ const ChatRoom = (): React.JSX.Element => {
         socket.on(SOCKET_EVENTS.MESSAGE, (data: ChatMessageDto) =>
             setMessages((prev) => [...prev, data])
         );
-        joinRoom(chatRoomNumber!);
-
-        return () => {
-            socket.disconnect();
-        };
     }, []);
 
     useEffect(() => {
@@ -122,7 +116,7 @@ const ChatRoom = (): React.JSX.Element => {
         socket.emit(SOCKET_EVENTS.MESSAGE, {
             room: chatRoomNumber,
             message: {
-                username: 'username',
+                username: username,
                 createdOn: new Date(),
                 content: content,
                 roomNumber: chatRoomNumber

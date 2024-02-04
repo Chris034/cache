@@ -1,5 +1,5 @@
 import { Page, useSwitchPage } from '../hooks';
-import { generateRoomCode } from '../commonLogic/generateRoomCode';
+import { generateRoomCode } from '../utility/generateRoomCode';
 import {
     TitleContainer,
     Title,

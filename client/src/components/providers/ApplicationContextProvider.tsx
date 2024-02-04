@@ -1,5 +1,7 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useState, useEffect } from 'react';
 import { Api, HttpClient } from '../../api/API';
+import { socket } from '../../socket/socket';
+import { generateUserName } from '../../utility/usernameGeneration';
 
 function getClientApi(): Api<unknown> {
     const client = new HttpClient({
@@ -10,10 +12,12 @@ function getClientApi(): Api<unknown> {
 
 export interface ApplicationContext {
     datasource: Api<unknown>;
+    username: string;
 }
 
 export const ApplicationContextInitialState: ApplicationContext = {
-    datasource: getClientApi()
+    datasource: getClientApi(),
+    username: generateUserName()
 };
 
 export const ApplicationContext = createContext<ApplicationContext>(
@@ -34,6 +38,21 @@ export const ApplicationContextProvider = (
     const [context, setContext] = useState<ApplicationContext>(
         ApplicationContextInitialState
     );
+
+    useEffect(() => {
+        const savedUsername = localStorage.getItem('username');
+        if (savedUsername) {
+            setContext((context) => ({ ...context, username: savedUsername }));
+        } else {
+            localStorage.setItem('username', context.username);
+        }
+
+        socket.on('connect', () => {});
+
+        return () => {
+            socket.disconnect();
+        };
+    }, []);
 
     return (
         <ApplicationContext.Provider value={context}>
