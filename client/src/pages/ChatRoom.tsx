@@ -8,7 +8,7 @@ import { useQuery } from '@tanstack/react-query';
 import { ChatMessageDto } from '../api/API';
 import { SOCKET_EVENTS } from '../api/socket/socketEvents';
 import { socket } from '../socket/socket';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const Wrapper = styled.div`
     padding: 40px 10px 40px 10px;
