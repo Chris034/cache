@@ -1,10 +1,7 @@
 const { generateApi, generateTemplates } = require('swagger-typescript-api');
 const path = require("path");
 const fs = require("fs");
-
-const url = `${process.env.REACT_APP_ENV === 'production'
-? process.env.REACT_APP_API_PROD_ENDPOINT
-: process.env.REACT_APP_API_DEV_ENDPOINT}/docs.json`
+const url = process.env.REACT_APP_API_DEV_ENDPOINT
 
 /* NOTE: all fields are optional expect one of `input`, `url`, `spec` */
 generateApi({

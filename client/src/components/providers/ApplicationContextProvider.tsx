@@ -41,7 +41,6 @@ export const ApplicationContextProvider = (
     const [context, setContext] = useState<ApplicationContext>(
         ApplicationContextInitialState
     );
-
     useEffect(() => {
         const savedUsername = localStorage.getItem('username');
         if (savedUsername) {

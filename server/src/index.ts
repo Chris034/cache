@@ -25,7 +25,11 @@ const io = new Server(httpServer, {
 
 const port = process.env.PORT || 5000;
 
-const allowedOrigins = [process.env.ALLOWED_CORS_ORIGINS];
+const allowedOrigins = [
+    process.env.NODE_ENV == 'production'
+        ? process.env.ALLOWED_CORS_ORIGINS_PROD
+        : process.env.ALLOWED_CORS_ORIGINS_DEV
+];
 
 const options: cors.CorsOptions = {
     origin: allowedOrigins

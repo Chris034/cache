@@ -63,7 +63,7 @@ const CodeInput = ({ onCodeChange, onSubmit }: CodeInputProps) => {
     const [values, setValues] = useState<string[]>(Array(numInputs).fill(''));
 
     const updateValues = (index: number, value: string) => {
-        setValues((values) => {
+        setValues((values: string[]) => {
             let newVal = values.map((val, i) => (i == index ? value : val));
             return newVal;
         });

@@ -4,12 +4,11 @@ import { ActionButton, ButtonGroup, ChatInput } from '../components';
 import ChatMessageView from '../components/ChatMessageView';
 import { generateRoomCode } from '../utility/generateRoomCode';
 import { useApplication } from '../components/providers/ApplicationContextProvider';
-import { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { io } from 'socket.io-client';
 import { ChatMessageDto } from '../api/API';
 import { SOCKET_EVENTS } from '../api/socket/socketEvents';
 import { socket } from '../socket/socket';
+import { useState } from 'react';
 
 const Wrapper = styled.div`
     padding: 40px 10px 40px 10px;
@@ -62,7 +61,7 @@ const ChatBoxInputContainer = styled.div`
     flex-shrink: 0;
 `;
 
-const ChatRoom = (): React.JSX.Element => {
+const ChatRoom = (): JSX.Element => {
     const {
         navigateTo,
         params: { chatRoomNumber }
@@ -96,7 +95,7 @@ const ChatRoom = (): React.JSX.Element => {
     useEffect(() => {
         // listen whenever a message comes in append to messages
         socket.on(SOCKET_EVENTS.MESSAGE, (data: ChatMessageDto) =>
-            setMessages((prev) => [...prev, data])
+            setMessages((prev: ChatMessageDto[]) => [...prev, data])
         );
     }, []);
 

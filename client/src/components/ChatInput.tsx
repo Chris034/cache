@@ -81,8 +81,6 @@ const ChatInput = (props: ChatInputProps) => {
         }
     }
 
-    console.log(chatInput);
-
     useEffect(() => {
         inputBoxRef?.current?.addEventListener('input', () =>
             autoResize(inputBoxRef)

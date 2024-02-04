@@ -11,13 +11,15 @@
     "react-scripts": "5.0.1",
     "socket.io-client": "^4.7.4",
     "styled-components": "^6.1.8",
+    "swagger-typescript-api": "^13.0.3",
     "typescript": "^4.9.5"
   },
   "scripts": {
-    "prestart": "npm run generate-api",
-    "start": "react-scripts start",
-    "prebuild": "npm run generate-api",
     "build": "react-scripts build",
+    "start": "react-scripts start",
+    "swagger": "npm run generate-api",
+    "predev": "npm run generate-api",
+    "dev": "react-scripts start",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "generate-api": "node ./scripts/swagger.js"
