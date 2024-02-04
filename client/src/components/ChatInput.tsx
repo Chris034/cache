@@ -93,6 +93,7 @@ const ChatInput = (props: ChatInputProps) => {
             );
         };
     }, []);
+
     return (
         <InputBox
             $height={`${MIN_INPUT_HEIGHT}px`}

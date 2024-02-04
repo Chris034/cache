@@ -118,7 +118,7 @@ const ChatRoom = (): React.JSX.Element => {
             message: {
                 username: username,
                 createdOn: new Date(),
-                content: content,
+                content: encodeURIComponent(content),
                 roomNumber: chatRoomNumber
             }
         });

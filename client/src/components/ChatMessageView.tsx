@@ -17,6 +17,7 @@ const MessageView = styled.div`
     box-sizing: border-box;
     overflow-y: auto;
     overflow-x: hidden;
+    white-space: pre;
 
     &::-webkit-scrollbar {
         width: 3px;

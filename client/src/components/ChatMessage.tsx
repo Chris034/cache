@@ -59,7 +59,9 @@ const ChatMessage = (props: ChatMessageProps) => {
                 <MessageUserName $color={color}>{username}</MessageUserName>
                 <MessageCreatedOn>{day + ' ' + time}</MessageCreatedOn>
             </MessageHeader>
-            <MessageContent>{messageContent}</MessageContent>
+            <MessageContent>
+                {decodeURIComponent(messageContent)}
+            </MessageContent>
         </Message>
     );
 };
