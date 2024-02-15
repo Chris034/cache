@@ -35,6 +35,10 @@ export interface ApplicationContextProviderProps {
     children: JSX.Element[] | JSX.Element;
 }
 
+const LOCAL_STORAGE_KEYS = {
+    USERNAME: 'username'
+};
+
 export const ApplicationContextProvider = (
     props: ApplicationContextProviderProps
 ) => {
@@ -42,11 +46,11 @@ export const ApplicationContextProvider = (
         ApplicationContextInitialState
     );
     useEffect(() => {
-        const savedUsername = localStorage.getItem('username');
+        const savedUsername = localStorage.getItem(LOCAL_STORAGE_KEYS.USERNAME);
         if (savedUsername) {
             setContext((context) => ({ ...context, username: savedUsername }));
         } else {
-            localStorage.setItem('username', context.username);
+            localStorage.setItem(LOCAL_STORAGE_KEYS.USERNAME, context.username);
         }
 
         socket.on('connect', () => {});

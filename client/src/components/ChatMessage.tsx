@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 import { ChatMessageDto } from '../api/API';
 import { generateColorByUser } from '../utility/usernameGeneration';
+import Linkify from 'react-linkify';
+import React from 'react';
 
 const Message = styled.div`
     padding: 25px;
@@ -47,6 +49,18 @@ interface ChatMessageProps {
     message: ChatMessageDto;
 }
 
+function componentDecorator(
+    decoratedHref: string,
+    decoratedText: string,
+    key: number
+): React.ReactNode {
+    return (
+        <a target="_blank" href={decoratedHref} key={key}>
+            {decoratedText}
+        </a>
+    );
+}
+
 const ChatMessage = (props: ChatMessageProps) => {
     const { username, content: messageContent, createdOn } = props.message;
     const date = new Date(createdOn!);
@@ -60,7 +74,9 @@ const ChatMessage = (props: ChatMessageProps) => {
                 <MessageCreatedOn>{day + ' ' + time}</MessageCreatedOn>
             </MessageHeader>
             <MessageContent>
-                {decodeURIComponent(messageContent)}
+                <Linkify componentDecorator={componentDecorator}>
+                    {decodeURIComponent(messageContent)}
+                </Linkify>
             </MessageContent>
         </Message>
     );

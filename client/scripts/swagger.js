@@ -1,16 +1,20 @@
-const { generateApi, generateTemplates } = require('swagger-typescript-api');
-const path = require("path");
-const fs = require("fs");
-const url = process.env.REACT_APP_API_DEV_ENDPOINT
+import { generateApi } from 'swagger-typescript-api';
+import * as path from 'path';
+import 'dotenv/config'
+
+
+const url = process.env.REACT_APP_ENV === 'production'
+? process.env.REACT_APP_API_PROD_ENDPOINT
+: process.env.REACT_APP_API_DEV_ENDPOINT
 
 /* NOTE: all fields are optional expect one of `input`, `url`, `spec` */
 generateApi({
   name: "API.ts",
   // set to `false` to prevent the tool from writing to disk
   output: path.resolve(process.cwd(), "./src/api"),
-  url: url,
+  url: url +'/docs.json',
   httpClientType: "fetch", // or "fetch"
-  defaultResponseAsSuccess: false,
+  defaultResponseAsSuccess: false, 
   generateClient: true,
   generateRouteTypes: false,
   generateResponses: true,

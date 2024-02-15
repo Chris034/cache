@@ -143,7 +143,7 @@ const ChatRoom = (): JSX.Element => {
                     style={{ maxWidth: '30vw' }}
                 >
                     <ActionButton onClick={handleCreateRoomClick}>
-                        make a room
+                        feeling lucky
                     </ActionButton>
                     <ActionButton onClick={handleJoinRoomClick}>
                         join a room

@@ -7,7 +7,6 @@ export const TitleContainer = styled.div<{
 }>`
     padding: 10px;
     position: absolute;
-
     @media ${device.mobile} {
         left: 0;
         top: 0;

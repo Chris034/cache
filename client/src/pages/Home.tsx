@@ -25,18 +25,17 @@ const Home = (): React.JSX.Element => {
             <Title>cache</Title>
             <Tagline>fast and simple file sharing</Tagline>
             <Description>
-                Create private chat rooms in a snap. Share texts, links, images,
-                and files securely.{' '}
+                Share texts, links, images, and files between devices or friends
+                in a snap.{' '}
             </Description>
             <Description>
-                Everything vanishes once the chat ends, ensuring total privacy.
+                Join a room and instantly start communicating. No login
+                required.
             </Description>
-            <Description>
-                Connect, share, and communicate with peace of mind.
-            </Description>
+            <Description>Experience frictionless messaging.</Description>
             <ButtonGroup $marginTop="75px" $gap="210px">
                 <ActionButton onClick={handleCreateRoomClick}>
-                    make a room
+                    feeling lucky
                 </ActionButton>
                 <ActionButton onClick={handleJoinRoomClick}>
                     join a room

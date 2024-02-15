@@ -56,11 +56,11 @@ type CodeInputProps = {
 };
 
 const CodeInput = ({ onCodeChange, onSubmit }: CodeInputProps) => {
-    const numInputs = 4;
+    const CODE_INPUTS = 4;
 
     const inputRefs = useRef<HTMLInputElement[]>([]);
 
-    const [values, setValues] = useState<string[]>(Array(numInputs).fill(''));
+    const [values, setValues] = useState<string[]>(Array(CODE_INPUTS).fill(''));
 
     const updateValues = (index: number, value: string) => {
         setValues((values: string[]) => {
@@ -76,7 +76,7 @@ const CodeInput = ({ onCodeChange, onSubmit }: CodeInputProps) => {
     const handleOnNumberInput =
         (index: number) => (e: ChangeEvent<HTMLInputElement>) => {
             updateValues(index, e.target.value.slice(0, 1));
-            if (index < numInputs - 1 && e.target.value) {
+            if (index < CODE_INPUTS - 1 && e.target.value) {
                 inputRefs.current[index + 1]?.focus();
             }
         };
@@ -90,7 +90,7 @@ const CodeInput = ({ onCodeChange, onSubmit }: CodeInputProps) => {
             } else if (e.key === 'ArrowLeft' && index > 0) {
                 inputRefs.current[index - 1]?.focus();
                 e.preventDefault();
-            } else if (e.key === 'ArrowRight' && index < numInputs - 1) {
+            } else if (e.key === 'ArrowRight' && index < CODE_INPUTS - 1) {
                 inputRefs.current[index + 1]?.focus();
                 e.preventDefault();
             } else if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
@@ -104,7 +104,9 @@ const CodeInput = ({ onCodeChange, onSubmit }: CodeInputProps) => {
         };
 
     const handleOnPaste = (e: ClipboardEvent<HTMLInputElement>) => {
-        const pastedData = e.clipboardData.getData('text').slice(0, numInputs);
+        const pastedData = e.clipboardData
+            .getData('text')
+            .slice(0, CODE_INPUTS);
         pastedData.split('').map((char, index) => {
             inputRefs.current[index]?.focus();
             updateValues(index, char);
@@ -114,7 +116,7 @@ const CodeInput = ({ onCodeChange, onSubmit }: CodeInputProps) => {
 
     return (
         <InputForm>
-            {Array.from({ length: numInputs }, (_, index) => (
+            {Array.from({ length: CODE_INPUTS }, (_, index) => (
                 <NumberInput
                     key={index}
                     type="number"
