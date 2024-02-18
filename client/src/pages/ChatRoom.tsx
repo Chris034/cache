@@ -5,13 +5,14 @@ import ChatMessageView from '../components/ChatMessageView';
 import { generateRoomCode } from '../utility/generateRoomCode';
 import { useApplication } from '../components/providers/ApplicationContextProvider';
 import { useQuery } from '@tanstack/react-query';
-import { ChatMessageDto } from '../api/API';
+import { ChatMessageDto, FileDto } from '../api/API';
 import { SOCKET_EVENTS } from '../api/socket/socketEvents';
 import { socket } from '../socket/socket';
 import { useEffect, useState } from 'react';
+import { blobToArrayBuffer } from '../utility/fileTransfer';
 
 const Wrapper = styled.div`
-    padding: 40px 10px 40px 10px;
+    padding: 40px 10px 38px 10px;
     height: 100vh;
     box-sizing: border-box;
     display: flex;
@@ -58,6 +59,7 @@ const ChatBoxInputContainer = styled.div`
     width: 100%;
     min-height: 50px;
     margin-top: 15px;
+    margin-bottom: 2px;
     flex-shrink: 0;
 `;
 
@@ -94,9 +96,9 @@ const ChatRoom = (): JSX.Element => {
 
     useEffect(() => {
         // listen whenever a message comes in append to messages
-        socket.on(SOCKET_EVENTS.MESSAGE, (data: ChatMessageDto) =>
-            setMessages((prev: ChatMessageDto[]) => [...prev, data])
-        );
+        socket.on(SOCKET_EVENTS.MESSAGE, (data: ChatMessageDto) => {
+            setMessages((prev: ChatMessageDto[]) => [...prev, data]);
+        });
     }, []);
 
     useEffect(() => {
@@ -110,7 +112,21 @@ const ChatRoom = (): JSX.Element => {
         refetchChatRoomMessages();
     }, [chatRoomNumber]);
 
-    const sendMessage = (content: string) => {
+    const sendMessage = async (content: string, files: File[]) => {
+        const buffers = await Promise.all(
+            files.map(async (file) => {
+                return await new Response(file).arrayBuffer();
+            })
+        );
+
+        const fileDto: FileDto[] = files.map((file: File, idx: number) => {
+            return {
+                fileName: file.name,
+                contentType: file.type,
+                data: buffers[idx] as unknown as string
+            };
+        });
+
         // Send message to the server in a specific room
         socket.emit(SOCKET_EVENTS.MESSAGE, {
             room: chatRoomNumber,
@@ -118,7 +134,8 @@ const ChatRoom = (): JSX.Element => {
                 username: username,
                 createdOn: new Date(),
                 content: encodeURIComponent(content),
-                roomNumber: chatRoomNumber
+                roomNumber: chatRoomNumber,
+                files: fileDto
             }
         });
     };
@@ -132,6 +149,7 @@ const ChatRoom = (): JSX.Element => {
     if (isLoading) return <>Loading...</>;
 
     if (error) return <>An error has occurred: + {error.message}</>;
+    console.log(messages);
 
     return (
         <Wrapper>

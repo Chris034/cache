@@ -14,6 +14,10 @@
  *           type: string
  *         roomNumber:
  *           type: integer
+ *         files:
+ *           type: array
+ *           items:
+ *             $ref: '#/components/schemas/FileDto'
  *       required:
  *         - roomNumber
  *         - content

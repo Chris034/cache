@@ -34,7 +34,8 @@ async function createMessage(req, res) {
             roomNumber: req.body.roomNumber,
             content: req.body.content,
             username: req.body.username,
-            createdOn: req.body.createdOn
+            createdOn: req.body.createdOn,
+            files: req.body.files || []
         });
 
         // Insert the article in our MongoDB database

@@ -32,8 +32,16 @@ function initalizeChatRoomSocket(io: Server) {
                     roomNumber: data.message.roomNumber,
                     content: data.message.content,
                     username: data.message.username,
-                    createdOn: data.message.createdOn
+                    createdOn: data.message.createdOn,
+                    files: data.message.files.map((file) => {
+                        return {
+                            fileName: file.fileName,
+                            contentType: file.contentType,
+                            data: Buffer.from(file.data)
+                        };
+                    })
                 });
+                console.log(data.message.files);
                 await chatMessage.save();
                 io.to(data.room).emit(SOCKET_EVENTS.MESSAGE, chatMessage);
             } else {

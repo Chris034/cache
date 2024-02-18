@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import ChatMessage from './ChatMessage';
 import { useEffect, useLayoutEffect, useRef } from 'react';
 import { ChatMessageDto } from '../api/API';
+import { message } from 'antd';
 
 const MessageViewWrapper = styled.div`
     background: #232323;
@@ -20,16 +21,16 @@ const MessageView = styled.div`
     white-space: pre;
 
     &::-webkit-scrollbar {
-        width: 3px;
+        width: 6px;
     }
 
     &::-webkit-scrollbar-track {
-        background-color: #transparent;
+        background-color: #343434;
         border-radius: 10px;
     }
 
     &::-webkit-scrollbar-thumb {
-        background-color: #343434;
+        background-color: grey;
         border-radius: 10px;
         background-clip: content-box;
     }
@@ -75,7 +76,6 @@ const ChatMessageView = (props: ChatMessageViewProps) => {
             }, 5);
         }
     }, []);
-
     return (
         <MessageViewWrapper>
             <MessageView ref={refView}>

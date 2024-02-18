@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import { fileSchema } from './fileSchema';
 const { Schema, model } = mongoose;
 
 const chatMessageSchema = new Schema({
@@ -17,6 +18,10 @@ const chatMessageSchema = new Schema({
     roomNumber: {
         type: String,
         required: true
+    },
+    files: {
+        type: [fileSchema],
+        required: false
     }
 });
 
