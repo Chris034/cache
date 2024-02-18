@@ -8,18 +8,32 @@ const FileChipGroup = styled.div`
     flex-direction: row;
     gap: 10px;
     align-items: center;
-    justify-content: center;
-    margin: 0px 30px 10px 30px;
+    justify-content: left;
+    margin: 0px;
+    max-width: 100%;
+    flex-wrap: wrap; // Allow chips to wrap instead of overflowing
+    padding: 15px 0px; 
 `;
 
 const FileChip = styled.div<{ $backgroundColor: string }>`
-    background-color: ${(props) => props.$backgroundColor};
-    color: black;
-    padding: 5px 10px;
-    border-radius: 8px;
-    border: 1px solid black;
+    color: ${(props) => props.$backgroundColor};
+    background-color: transparent;
+    padding: 8px 16px;
+    border: 1px solid ${(props) => props.$backgroundColor};
     font-family: IBM Plex Sans;
-    font-size: 16px;
+    font-size: 12px;
+    align-items: center; // Center content within the chip
+
+    &:hover {
+        background-color: ${(props) => props.$backgroundColor};
+        color: black;
+        cursor: pointer;
+        transition: all ease-in 0.1s;
+    }
+
+    @media (max-width: 550px) {
+        padding: 3px 6px; // Reduce padding on smaller screens
+    }
 `;
 
 interface FileDisplayProps {

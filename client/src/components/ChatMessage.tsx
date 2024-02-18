@@ -7,7 +7,6 @@ import { FileDisplay } from './FileDisplay';
 
 const Message = styled.div`
     padding: 25px;
-    width: 95%;
     background: #inherit;
     color: white;
     display: flex;
@@ -81,13 +80,13 @@ const ChatMessage = (props: ChatMessageProps) => {
             <MessageHeader>
                 <MessageUserName $color={color}>{username}</MessageUserName>
                 <MessageCreatedOn>{day + ' ' + time}</MessageCreatedOn>
-                <FileDisplay
+            </MessageHeader>
+            <MessageContent>
+            <FileDisplay
                     fileDisplayRef={undefined}
                     files={files || []}
                     canDownload={true}
                 />
-            </MessageHeader>
-            <MessageContent>
                 <Linkify componentDecorator={componentDecorator}>
                     {decodeURIComponent(messageContent)}
                 </Linkify>

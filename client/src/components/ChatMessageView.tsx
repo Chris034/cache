@@ -21,22 +21,23 @@ const MessageView = styled.div`
     white-space: pre;
 
     &::-webkit-scrollbar {
-        width: 6px;
+        width: 7px;
     }
 
     &::-webkit-scrollbar-track {
-        background-color: #343434;
         border-radius: 10px;
     }
 
     &::-webkit-scrollbar-thumb {
-        background-color: grey;
+        background-color: #484848;
         border-radius: 10px;
-        background-clip: content-box;
+        background-clip: padding-box;
+        border: 3px solid transparent;
     }
 
     &::-webkit-scrollbar-thumb:hover {
         background-color: #666666;
+        border: 0;
     }
 `;
 

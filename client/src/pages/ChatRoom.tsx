@@ -36,6 +36,11 @@ const ChatRoomTitle = styled.div`
     letter-spacing: -0.07em;
     text-align: left;
     padding-left: 10px;
+    @media (max-width: 400px) {
+        font-size: 15vw;
+        line-height: 6vh;
+        padding-left: 0px;
+    }
 `;
 
 const ChatBoxContainer = styled.div`

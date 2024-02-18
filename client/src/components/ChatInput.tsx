@@ -201,7 +201,7 @@ const ChatInput = (props: ChatInputProps) => {
                 onChange={(e) => setChatInput(e.target.value)}
                 onKeyDown={handleOnKeyDown}
                 placeholder={
-                    isDragging ? '-- Drop HERE ---' : 'Enter message...'
+                    isDragging ? 'Drop File Here...' : 'Enter message...'
                 }
                 ref={inputBoxRef}
                 onDrop={handleDrop}

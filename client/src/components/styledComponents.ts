@@ -7,12 +7,6 @@ export const TitleContainer = styled.div<{
 }>`
     padding: 10px;
     position: absolute;
-    @media ${device.mobile} {
-        left: 0;
-        top: 0;
-    }
-
-    @media ${device.desktop} {
         left: 12%;
         top: 20%;
         transform: translate(
@@ -20,7 +14,6 @@ export const TitleContainer = styled.div<{
             ${(props) => (props.$translateY ? props.$translateY : 0)}%
         );
         width: 75%;
-    }
 `;
 
 export const Title = styled.div`
@@ -33,6 +26,13 @@ export const Title = styled.div`
     text-align: left;
     margin-left: -10px;
     margin-bottom: -25px;
+
+    @media ${device.mobile} {
+        font-size: 96px;
+        line-height: 93px;
+        margin-bottom: 0;
+        padding-bottom: 20px;
+    }
 `;
 
 export const Tagline = styled.div`
@@ -43,8 +43,11 @@ export const Tagline = styled.div`
     line-height: 94px;
     letter-spacing: -0.05em;
     text-align: left;
+
     @media ${device.mobile} {
-        font-size: 62px;
+        font-size: 36px;
+        line-height: 47px;
+        padding-bottom: 20px;
     }
 `;
 
@@ -56,6 +59,11 @@ export const Description = styled.div`
     line-height: 23px;
     letter-spacing: -0.05em;
     text-align: left;
+
+    @media ${device.mobile} {
+        font-size: 16px;
+        line-height: 20px;
+    }
 `;
 
 export const ButtonGroup = styled.div<{
@@ -72,7 +80,13 @@ export const ButtonGroup = styled.div<{
     margin-top: ${(props) => props.$marginTop || 0};
     left: 0;
     width: 100%;
-    gap: ${(props) => props.$gap || 0};
+    gap: ${(props) => props.$gap || '10px'}; // Default gap adjusted for better spacing
+    padding: 10px;
+
+    @media ${device.mobile} {
+        gap: 12px; // Smaller gap for a tighter layout
+        $marginTop: '10px'; // Adjust top margin if necessary
+    }
 `;
 
 export const ActionButton = styled.button`
@@ -85,6 +99,8 @@ export const ActionButton = styled.button`
     line-height: 23px;
     letter-spacing: -0.05em;
     text-align: left;
+    max-height: 75px;
+    min-width: 120px;
 
     background-color: #232323;
     border: 2px solid white;
@@ -98,5 +114,16 @@ export const ActionButton = styled.button`
         box-shadow: none;
         transform: translateY(4px) !important;
         transition: all ease-in 0.05s;
+    }
+
+    @media ${device.mobile} {
+        font-size: 16px; // Slightly smaller font size for better fit
+        padding: 10px 20px; // Adjust padding for smaller screens
+        box-shadow: -2px 3px #ffffff; // Adjust shadow for consistency
+        overflow: hidden;
+        padding: 6px 12px;
+        font-size: 12px; // Further reduce font size for very small screens
+        min-width: 75px;
+        
     }
 `;
