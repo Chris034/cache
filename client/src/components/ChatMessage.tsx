@@ -24,7 +24,7 @@ const MessageHeader = styled.div`
     display: flex;
     flex-direction: row;
     gap: 10px;
-
+    padding-bottom: 7px;
     align-items: center;
 `;
 
@@ -82,11 +82,13 @@ const ChatMessage = (props: ChatMessageProps) => {
                 <MessageCreatedOn>{day + ' ' + time}</MessageCreatedOn>
             </MessageHeader>
             <MessageContent>
-            <FileDisplay
-                    fileDisplayRef={undefined}
-                    files={files || []}
-                    canDownload={true}
-                />
+                {files && files?.length > 0 && (
+                    <FileDisplay
+                        fileDisplayRef={undefined}
+                        files={files || []}
+                        canDownload={true}
+                    />
+                )}
                 <Linkify componentDecorator={componentDecorator}>
                     {decodeURIComponent(messageContent)}
                 </Linkify>

@@ -118,16 +118,23 @@ const ChatInput = (props: ChatInputProps) => {
 
         if (droppedFiles.length > MAX_FILES) {
             alert(`At most ${MAX_FILES} files can be uploaded at a time`);
+            setIsDraggingOver(false);
+            setIsDragging(false);
             return;
         }
-
+        let validFileSize = true;
         droppedFiles.forEach((file) => {
             if (file.size > MAX_FILE_SIZE) {
                 alert('File size must be less than 10MB');
-                return;
+                validFileSize = false;
             }
         });
 
+        if (!validFileSize) {
+            setIsDraggingOver(false);
+            setIsDragging(false);
+            return;
+        }
         setFiles((prev) => [...prev, ...droppedFiles]);
 
         setIsDraggingOver(false);
@@ -141,7 +148,7 @@ const ChatInput = (props: ChatInputProps) => {
     function autoResize(ref: React.RefObject<HTMLTextAreaElement>) {
         let element: HTMLTextAreaElement | null = ref?.current;
         const fileDisplayHeight = fileDisplayRef?.current?.clientHeight
-            ? fileDisplayRef?.current?.clientHeight + 10
+            ? fileDisplayRef?.current?.clientHeight + 15
             : 0;
         if (
             element &&

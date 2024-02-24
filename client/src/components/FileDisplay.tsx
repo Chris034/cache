@@ -3,16 +3,19 @@ import { generateColorByUser } from '../utility/usernameGeneration';
 import { FileChipInfo } from './interfaces';
 import { downloadFile } from '../utility/fileTransfer';
 
-const FileChipGroup = styled.div`
+const FileChipGroup = styled.div<{
+    $justifyContent: string;
+    $marginBottom: string;
+}>`
     display: flex;
     flex-direction: row;
     gap: 10px;
     align-items: center;
-    justify-content: left;
-    margin: 0px;
+    justify-content: ${(props) => props.$justifyContent};
     max-width: 100%;
+
     flex-wrap: wrap; // Allow chips to wrap instead of overflowing
-    padding: 15px 0px; 
+    margin: ${(props) => `0px 0px ${props.$marginBottom} 0px`};
 `;
 
 const FileChip = styled.div<{ $backgroundColor: string }>`
@@ -53,7 +56,11 @@ export const FileDisplay = (props: FileDisplayProps) => {
 
     return (
         <div>
-            <FileChipGroup ref={fileDisplayRef}>
+            <FileChipGroup
+                ref={fileDisplayRef}
+                $justifyContent={canDownload ? 'left' : 'center'}
+                $marginBottom={canDownload ? '7px' : '15px'}
+            >
                 {files.map((file, index) => {
                     return (
                         <FileChip
